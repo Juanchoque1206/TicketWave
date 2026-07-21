@@ -1,0 +1,9 @@
+package com.insert7team.TicketWave.venue.repository;
+
+import com.insert7team.TicketWave.venue.entity.Section;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
+public interface SectionRepository extends JpaRepository<Section, Long> {
+    List<Section> findByVenueId(Long venueId);
+}
