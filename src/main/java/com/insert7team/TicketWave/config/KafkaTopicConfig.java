@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.config;
 
-import com.insert7team.TicketWave.common.kafka.KafkaTopics;
+import com.insert7team.TicketWave.shared.infrastructure.messaging.KafkaTopics;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

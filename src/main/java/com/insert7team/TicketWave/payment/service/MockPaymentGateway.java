@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.payment.service;
 
-import com.insert7team.TicketWave.common.enums.PaymentMethod;
+import com.insert7team.TicketWave.payment.domain.PaymentMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

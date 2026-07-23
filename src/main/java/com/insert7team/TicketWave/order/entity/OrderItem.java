@@ -1,10 +1,7 @@
 package com.insert7team.TicketWave.order.entity;
 
-import com.insert7team.TicketWave.common.entity.BaseEntity;
-import com.insert7team.TicketWave.common.enums.TicketType;
-import com.insert7team.TicketWave.event.entity.Event;
-import com.insert7team.TicketWave.venue.entity.Seat;
-import com.insert7team.TicketWave.venue.entity.Section;
+import com.insert7team.TicketWave.shared.infrastructure.persistence.BaseEntity;
+import com.insert7team.TicketWave.ticket.domain.TicketType;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 
@@ -16,17 +13,23 @@ public class OrderItem extends BaseEntity {
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id", nullable = false)
-    private Event event;
+    @Column(name = "event_id", nullable = false)
+    private Long eventId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "section_id", nullable = false)
-    private Section section;
+    @Column(length = 300)
+    private String eventTitle;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seat_id")
-    private Seat seat;
+    @Column(name = "section_id", nullable = false)
+    private Long sectionId;
+
+    @Column(length = 100)
+    private String sectionName;
+
+    @Column(name = "seat_id")
+    private Long seatId;
+
+    @Column(length = 20)
+    private String seatLabel;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -40,12 +43,18 @@ public class OrderItem extends BaseEntity {
 
     public Order getOrder() { return order; }
     public void setOrder(Order order) { this.order = order; }
-    public Event getEvent() { return event; }
-    public void setEvent(Event event) { this.event = event; }
-    public Section getSection() { return section; }
-    public void setSection(Section section) { this.section = section; }
-    public Seat getSeat() { return seat; }
-    public void setSeat(Seat seat) { this.seat = seat; }
+    public Long getEventId() { return eventId; }
+    public void setEventId(Long eventId) { this.eventId = eventId; }
+    public String getEventTitle() { return eventTitle; }
+    public void setEventTitle(String eventTitle) { this.eventTitle = eventTitle; }
+    public Long getSectionId() { return sectionId; }
+    public void setSectionId(Long sectionId) { this.sectionId = sectionId; }
+    public String getSectionName() { return sectionName; }
+    public void setSectionName(String sectionName) { this.sectionName = sectionName; }
+    public Long getSeatId() { return seatId; }
+    public void setSeatId(Long seatId) { this.seatId = seatId; }
+    public String getSeatLabel() { return seatLabel; }
+    public void setSeatLabel(String seatLabel) { this.seatLabel = seatLabel; }
     public TicketType getTicketType() { return ticketType; }
     public void setTicketType(TicketType ticketType) { this.ticketType = ticketType; }
     public BigDecimal getUnitPrice() { return unitPrice; }

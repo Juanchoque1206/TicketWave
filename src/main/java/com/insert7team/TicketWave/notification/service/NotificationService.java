@@ -1,15 +1,13 @@
 package com.insert7team.TicketWave.notification.service;
 
-import com.insert7team.TicketWave.event.entity.Event;
-import com.insert7team.TicketWave.order.entity.Order;
-import com.insert7team.TicketWave.payment.entity.Refund;
-import com.insert7team.TicketWave.ticket.entity.Ticket;
+import java.math.BigDecimal;
 
 public interface NotificationService {
-    void sendPurchaseConfirmation(Order order);
-    void sendTicketIssued(Ticket ticket);
-    void sendEventChanged(Event event, String changeDescription);
-    void sendEventCancelled(Event event);
-    void sendRefundProcessed(Refund refund);
+    void sendPurchaseConfirmation(Long userId, String email, String orderNumber,
+                                  BigDecimal totalAmount, String currency);
+    void sendTicketIssued(Long userId, String email, String eventTitle, String ticketCode);
+    void sendEventChanged(Long eventId, String eventTitle, String changeDescription);
+    void sendEventCancelled(Long eventId, String eventTitle);
+    void sendRefundProcessed(Long userId, String email, BigDecimal amount, String reason);
     void retryFailedNotifications();
 }

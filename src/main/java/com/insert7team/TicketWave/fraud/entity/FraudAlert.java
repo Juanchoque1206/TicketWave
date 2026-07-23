@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.fraud.entity;
 
-import com.insert7team.TicketWave.common.entity.BaseEntity;
+import com.insert7team.TicketWave.shared.infrastructure.persistence.BaseEntity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -29,6 +29,27 @@ public class FraudAlert extends BaseEntity {
     private String resolvedBy;
 
     private LocalDateTime resolvedAt;
+
+    // --- Domain behavior ---
+
+    public static FraudAlert create(Long userId, Long orderId, String alertType,
+                                    int riskScore, String details) {
+        FraudAlert alert = new FraudAlert();
+        alert.userId = userId;
+        alert.orderId = orderId;
+        alert.alertType = alertType;
+        alert.riskScore = riskScore;
+        alert.details = details;
+        return alert;
+    }
+
+    public void resolve(String resolvedBy) {
+        this.resolved = true;
+        this.resolvedBy = resolvedBy;
+        this.resolvedAt = LocalDateTime.now();
+    }
+
+    // --- Getters and setters ---
 
     public Long getUserId() { return userId; }
     public void setUserId(Long userId) { this.userId = userId; }

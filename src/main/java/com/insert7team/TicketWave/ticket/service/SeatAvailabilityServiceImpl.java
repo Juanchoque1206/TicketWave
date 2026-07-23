@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.ticket.service;
 
-import com.insert7team.TicketWave.common.enums.SeatStatus;
+import com.insert7team.TicketWave.venue.domain.SeatStatus;
 import com.insert7team.TicketWave.event.entity.EventPricing;
 import com.insert7team.TicketWave.event.repository.EventPricingRepository;
 import com.insert7team.TicketWave.ticket.dto.SeatAvailabilityResponse;
@@ -123,8 +123,9 @@ public class SeatAvailabilityServiceImpl implements SeatAvailabilityService {
     public void initializeEventAvailability(Long eventId) {
         List<EventPricing> pricings = eventPricingRepository.findByEventId(eventId);
         for (EventPricing pricing : pricings) {
-            Section section = pricing.getSection();
-            if (section.isGeneralAdmission()) {
+            Section section = sectionRepository.findById(pricing.getSectionId())
+                    .orElse(null);
+            if (section != null && section.isGeneralAdmission()) {
                 String key = "ga:" + eventId + ":" + section.getId() + ":avail";
                 redisTemplate.opsForValue().set(key, String.valueOf(pricing.getAvailableQuantity()));
             }

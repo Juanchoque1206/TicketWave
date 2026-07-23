@@ -1,7 +1,7 @@
 package com.insert7team.TicketWave.event.service;
 
-import com.insert7team.TicketWave.common.dto.PagedResponse;
-import com.insert7team.TicketWave.common.enums.EventStatus;
+import com.insert7team.TicketWave.shared.domain.dto.PagedResponse;
+import com.insert7team.TicketWave.event.domain.EventStatus;
 import com.insert7team.TicketWave.event.dto.EventSearchCriteria;
 import com.insert7team.TicketWave.event.dto.EventSummaryResponse;
 import com.insert7team.TicketWave.event.entity.Event;
@@ -60,8 +60,8 @@ public class EventSearchServiceImpl implements EventSearchService {
                 .orElse(BigDecimal.ZERO);
         return new EventSummaryResponse(
                 event.getId(), event.getTitle(), event.getArtist(), event.getCategory(),
-                event.getEventDate(), event.getStatus(), event.getVenue().getName(),
-                event.getVenue().getCity(), minPrice, event.getImageUrl()
+                event.getEventDate(), event.getStatus(), event.getVenueName(),
+                event.getVenueCity(), minPrice, event.getImageUrl()
         );
     }
 }

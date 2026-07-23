@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.fraud.service;
 
-import com.insert7team.TicketWave.common.exception.ResourceNotFoundException;
+import com.insert7team.TicketWave.shared.infrastructure.exception.ResourceNotFoundException;
 import com.insert7team.TicketWave.fraud.entity.FraudAlert;
 import com.insert7team.TicketWave.fraud.repository.FraudAlertRepository;
 import com.insert7team.TicketWave.order.dto.CreateOrderRequest;
@@ -64,12 +64,9 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
         riskScore = Math.min(riskScore, 100);
 
         if (riskScore >= highRiskThreshold) {
-            FraudAlert alert = new FraudAlert();
-            alert.setUserId(userId);
-            alert.setAlertType("AUTOMATED_RISK_ASSESSMENT");
-            alert.setRiskScore(riskScore);
-            alert.setDetails(String.format("Velocity: %d orders/hr, Quantity: %d, Sections: %d",
-                    recentOrders, totalQuantity, distinctSections));
+            FraudAlert alert = FraudAlert.create(userId, null, "AUTOMATED_RISK_ASSESSMENT",
+                    riskScore, String.format("Velocity: %d orders/hr, Quantity: %d, Sections: %d",
+                            recentOrders, totalQuantity, distinctSections));
             fraudAlertRepository.save(alert);
         }
 
@@ -93,9 +90,7 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
     public void resolveAlert(Long alertId, String resolvedBy) {
         FraudAlert alert = fraudAlertRepository.findById(alertId)
                 .orElseThrow(() -> new ResourceNotFoundException("Fraud alert not found"));
-        alert.setResolved(true);
-        alert.setResolvedBy(resolvedBy);
-        alert.setResolvedAt(LocalDateTime.now());
+        alert.resolve(resolvedBy);
         fraudAlertRepository.save(alert);
     }
 }

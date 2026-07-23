@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.venue.service;
 
-import com.insert7team.TicketWave.common.dto.PagedResponse;
+import com.insert7team.TicketWave.shared.domain.dto.PagedResponse;
 import com.insert7team.TicketWave.venue.dto.*;
 import org.springframework.data.domain.Pageable;
 

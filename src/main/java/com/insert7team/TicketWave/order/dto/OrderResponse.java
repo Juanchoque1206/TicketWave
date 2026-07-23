@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.order.dto;
 
-import com.insert7team.TicketWave.common.enums.OrderStatus;
+import com.insert7team.TicketWave.order.domain.OrderStatus;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;

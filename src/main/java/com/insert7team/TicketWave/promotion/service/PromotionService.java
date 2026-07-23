@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.promotion.service;
 
-import com.insert7team.TicketWave.common.enums.PromotionScope;
+import com.insert7team.TicketWave.promotion.domain.PromotionScope;
 import com.insert7team.TicketWave.promotion.dto.CreatePromotionRequest;
 import com.insert7team.TicketWave.promotion.dto.PromotionResponse;
 import com.insert7team.TicketWave.promotion.dto.PromotionValidationResponse;

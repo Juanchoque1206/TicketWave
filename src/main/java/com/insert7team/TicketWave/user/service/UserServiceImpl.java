@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.user.service;
 
-import com.insert7team.TicketWave.common.exception.ResourceNotFoundException;
+import com.insert7team.TicketWave.shared.infrastructure.exception.ResourceNotFoundException;
 import com.insert7team.TicketWave.user.dto.UpdateProfileRequest;
 import com.insert7team.TicketWave.user.dto.UserProfileResponse;
 import com.insert7team.TicketWave.user.entity.User;

@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.venue.entity;
 
-import com.insert7team.TicketWave.common.entity.BaseEntity;
+import com.insert7team.TicketWave.shared.infrastructure.persistence.BaseEntity;
 import jakarta.persistence.*;
 
 @Entity

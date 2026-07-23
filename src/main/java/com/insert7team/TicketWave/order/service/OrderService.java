@@ -1,8 +1,9 @@
 package com.insert7team.TicketWave.order.service;
 
-import com.insert7team.TicketWave.common.dto.PagedResponse;
+import com.insert7team.TicketWave.shared.domain.dto.PagedResponse;
 import com.insert7team.TicketWave.order.dto.CreateOrderRequest;
 import com.insert7team.TicketWave.order.dto.OrderResponse;
+import com.insert7team.TicketWave.order.entity.Order;
 import org.springframework.data.domain.Pageable;
 
 public interface OrderService {
@@ -13,4 +14,6 @@ public interface OrderService {
     void cancelOrder(Long orderId, Long userId);
     void expireStaleOrders();
     void completeOrder(Long orderId);
+    void markPaymentProcessing(Long orderId);
+    Order getOrderEntity(Long orderId);
 }

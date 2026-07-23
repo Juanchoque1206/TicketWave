@@ -1,7 +1,7 @@
 package com.insert7team.TicketWave.payment.entity;
 
-import com.insert7team.TicketWave.common.entity.BaseEntity;
-import com.insert7team.TicketWave.common.enums.PaymentStatus;
+import com.insert7team.TicketWave.shared.infrastructure.persistence.BaseEntity;
+import com.insert7team.TicketWave.payment.domain.PaymentStatus;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -28,6 +28,16 @@ public class Refund extends BaseEntity {
     private String externalRefundId;
 
     private LocalDateTime processedAt;
+
+    // --- Domain behavior ---
+
+    public void markProcessed(String externalRefundId) {
+        this.status = PaymentStatus.COMPLETED;
+        this.externalRefundId = externalRefundId;
+        this.processedAt = LocalDateTime.now();
+    }
+
+    // --- Getters and setters ---
 
     public Payment getPayment() { return payment; }
     public void setPayment(Payment payment) { this.payment = payment; }

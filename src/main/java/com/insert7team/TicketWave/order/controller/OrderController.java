@@ -1,11 +1,10 @@
 package com.insert7team.TicketWave.order.controller;
 
-import com.insert7team.TicketWave.common.dto.ApiResponse;
-import com.insert7team.TicketWave.common.dto.PagedResponse;
+import com.insert7team.TicketWave.shared.domain.dto.ApiResponse;
+import com.insert7team.TicketWave.shared.domain.dto.PagedResponse;
 import com.insert7team.TicketWave.order.dto.CreateOrderRequest;
 import com.insert7team.TicketWave.order.dto.OrderResponse;
 import com.insert7team.TicketWave.order.service.OrderService;
-import com.insert7team.TicketWave.user.entity.User;
 import com.insert7team.TicketWave.user.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
@@ -31,8 +30,8 @@ public class OrderController {
     public ResponseEntity<ApiResponse<OrderResponse>> createOrder(
             @AuthenticationPrincipal UserDetails userDetails,
             @Valid @RequestBody CreateOrderRequest request) {
-        User user = userService.getUserEntityByEmail(userDetails.getUsername());
-        OrderResponse response = orderService.createOrder(user.getId(), request);
+        Long userId = userService.getUserEntityByEmail(userDetails.getUsername()).getId();
+        OrderResponse response = orderService.createOrder(userId, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.ok("Order created", response));
     }
 
@@ -40,8 +39,8 @@ public class OrderController {
     public ResponseEntity<ApiResponse<OrderResponse>> getOrder(
             @PathVariable Long orderId,
             @AuthenticationPrincipal UserDetails userDetails) {
-        User user = userService.getUserEntityByEmail(userDetails.getUsername());
-        OrderResponse response = orderService.getOrder(orderId, user.getId());
+        Long userId = userService.getUserEntityByEmail(userDetails.getUsername()).getId();
+        OrderResponse response = orderService.getOrder(orderId, userId);
         return ResponseEntity.ok(ApiResponse.ok(response));
     }
 
@@ -49,16 +48,16 @@ public class OrderController {
     public ResponseEntity<ApiResponse<OrderResponse>> getOrderByNumber(
             @PathVariable String orderNumber,
             @AuthenticationPrincipal UserDetails userDetails) {
-        User user = userService.getUserEntityByEmail(userDetails.getUsername());
-        OrderResponse response = orderService.getOrderByNumber(orderNumber, user.getId());
+        Long userId = userService.getUserEntityByEmail(userDetails.getUsername()).getId();
+        OrderResponse response = orderService.getOrderByNumber(orderNumber, userId);
         return ResponseEntity.ok(ApiResponse.ok(response));
     }
 
     @GetMapping("/me")
     public ResponseEntity<ApiResponse<PagedResponse<OrderResponse>>> getUserOrders(
             @AuthenticationPrincipal UserDetails userDetails, Pageable pageable) {
-        User user = userService.getUserEntityByEmail(userDetails.getUsername());
-        PagedResponse<OrderResponse> response = orderService.getUserOrders(user.getId(), pageable);
+        Long userId = userService.getUserEntityByEmail(userDetails.getUsername()).getId();
+        PagedResponse<OrderResponse> response = orderService.getUserOrders(userId, pageable);
         return ResponseEntity.ok(ApiResponse.ok(response));
     }
 
@@ -66,8 +65,8 @@ public class OrderController {
     public ResponseEntity<ApiResponse<Void>> cancelOrder(
             @PathVariable Long orderId,
             @AuthenticationPrincipal UserDetails userDetails) {
-        User user = userService.getUserEntityByEmail(userDetails.getUsername());
-        orderService.cancelOrder(orderId, user.getId());
+        Long userId = userService.getUserEntityByEmail(userDetails.getUsername()).getId();
+        orderService.cancelOrder(orderId, userId);
         return ResponseEntity.ok(ApiResponse.ok("Order cancelled", null));
     }
 }

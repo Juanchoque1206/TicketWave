@@ -1,13 +1,11 @@
 package com.insert7team.TicketWave.order.service;
 
-import com.insert7team.TicketWave.common.dto.PagedResponse;
-import com.insert7team.TicketWave.common.enums.EventStatus;
-import com.insert7team.TicketWave.common.enums.OrderStatus;
-import com.insert7team.TicketWave.common.enums.TicketStatus;
-import com.insert7team.TicketWave.common.exception.BusinessRuleException;
-import com.insert7team.TicketWave.common.exception.ResourceNotFoundException;
-import com.insert7team.TicketWave.common.exception.SeatUnavailableException;
-import com.insert7team.TicketWave.common.exception.UnauthorizedAccessException;
+import com.insert7team.TicketWave.shared.domain.dto.PagedResponse;
+import com.insert7team.TicketWave.order.domain.OrderStatus;
+import com.insert7team.TicketWave.ticket.domain.TicketStatus;
+import com.insert7team.TicketWave.shared.infrastructure.exception.BusinessRuleException;
+import com.insert7team.TicketWave.shared.infrastructure.exception.ResourceNotFoundException;
+import com.insert7team.TicketWave.shared.infrastructure.exception.SeatUnavailableException;
 import com.insert7team.TicketWave.event.entity.Event;
 import com.insert7team.TicketWave.event.entity.EventPricing;
 import com.insert7team.TicketWave.event.repository.EventPricingRepository;
@@ -23,12 +21,7 @@ import com.insert7team.TicketWave.ticket.entity.Ticket;
 import com.insert7team.TicketWave.ticket.repository.TicketRepository;
 import com.insert7team.TicketWave.ticket.service.SeatAvailabilityService;
 import com.insert7team.TicketWave.ticket.service.TicketService;
-import com.insert7team.TicketWave.user.entity.User;
 import com.insert7team.TicketWave.user.service.UserService;
-import com.insert7team.TicketWave.venue.entity.Seat;
-import com.insert7team.TicketWave.venue.entity.Section;
-import com.insert7team.TicketWave.venue.repository.SeatRepository;
-import com.insert7team.TicketWave.venue.repository.SectionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,7 +33,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -53,46 +45,38 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final EventRepository eventRepository;
     private final EventPricingRepository eventPricingRepository;
-    private final SectionRepository sectionRepository;
-    private final SeatRepository seatRepository;
     private final TicketRepository ticketRepository;
-    private final UserService userService;
     private final SeatAvailabilityService seatAvailabilityService;
     private final TicketService ticketService;
     private final OrderKafkaProducer orderKafkaProducer;
+    private final UserService userService;
 
     @Value("${ticketwave.order.expiration-minutes}")
     private int orderExpirationMinutes;
 
     public OrderServiceImpl(OrderRepository orderRepository, EventRepository eventRepository,
-                            EventPricingRepository eventPricingRepository, SectionRepository sectionRepository,
-                            SeatRepository seatRepository, TicketRepository ticketRepository,
-                            UserService userService, SeatAvailabilityService seatAvailabilityService,
-                            TicketService ticketService, OrderKafkaProducer orderKafkaProducer) {
+                            EventPricingRepository eventPricingRepository,
+                            TicketRepository ticketRepository,
+                            SeatAvailabilityService seatAvailabilityService,
+                            TicketService ticketService, OrderKafkaProducer orderKafkaProducer,
+                            UserService userService) {
         this.orderRepository = orderRepository;
         this.eventRepository = eventRepository;
         this.eventPricingRepository = eventPricingRepository;
-        this.sectionRepository = sectionRepository;
-        this.seatRepository = seatRepository;
         this.ticketRepository = ticketRepository;
-        this.userService = userService;
         this.seatAvailabilityService = seatAvailabilityService;
         this.ticketService = ticketService;
         this.orderKafkaProducer = orderKafkaProducer;
+        this.userService = userService;
     }
 
     @Override
     @Transactional
     public OrderResponse createOrder(Long userId, CreateOrderRequest request) {
-        User user = userService.getUserEntityById(userId);
         Event event = eventRepository.findById(request.eventId())
                 .orElseThrow(() -> new ResourceNotFoundException("Event not found"));
 
-        if (event.getStatus() != EventStatus.ON_SALE) {
-            throw new BusinessRuleException("Event is not currently on sale");
-        }
-        LocalDateTime now = LocalDateTime.now();
-        if (now.isBefore(event.getSalesStartAt()) || now.isAfter(event.getSalesEndAt())) {
+        if (!event.isSalesActive()) {
             throw new BusinessRuleException("Ticket sales are not active for this event");
         }
 
@@ -108,25 +92,22 @@ public class OrderServiceImpl implements OrderService {
         BigDecimal subtotal = BigDecimal.ZERO;
 
         for (OrderItemRequest itemReq : request.items()) {
-            Section section = sectionRepository.findById(itemReq.sectionId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Section not found"));
-
             EventPricing pricing = eventPricingRepository
-                    .findByEventIdAndSectionIdAndTicketType(event.getId(), section.getId(), itemReq.ticketType())
+                    .findByEventIdAndSectionIdAndTicketType(event.getId(), itemReq.sectionId(), itemReq.ticketType())
                     .orElseThrow(() -> new ResourceNotFoundException("Pricing not found for this section and ticket type"));
 
             if (itemReq.seatId() != null) {
-                Seat seat = seatRepository.findById(itemReq.seatId())
-                        .orElseThrow(() -> new ResourceNotFoundException("Seat not found"));
                 boolean reserved = seatAvailabilityService.reserveSeat(
-                        event.getId(), seat.getId(), userId, holdDuration);
+                        event.getId(), itemReq.seatId(), userId, holdDuration);
                 if (!reserved) {
-                    throw new SeatUnavailableException("Seat " + seat.getLabel() + " is not available");
+                    throw new SeatUnavailableException("Seat is not available");
                 }
                 OrderItem item = new OrderItem();
-                item.setEvent(event);
-                item.setSection(section);
-                item.setSeat(seat);
+                item.setEventId(event.getId());
+                item.setEventTitle(event.getTitle());
+                item.setSectionId(itemReq.sectionId());
+                item.setSectionName(pricing.getSectionName());
+                item.setSeatId(itemReq.seatId());
                 item.setTicketType(itemReq.ticketType());
                 item.setUnitPrice(pricing.getPrice());
                 item.setQuantity(1);
@@ -134,13 +115,15 @@ public class OrderServiceImpl implements OrderService {
                 subtotal = subtotal.add(pricing.getPrice());
             } else {
                 boolean reserved = seatAvailabilityService.reserveGA(
-                        event.getId(), section.getId(), itemReq.quantity(), userId, holdDuration);
+                        event.getId(), itemReq.sectionId(), itemReq.quantity(), userId, holdDuration);
                 if (!reserved) {
                     throw new SeatUnavailableException("Not enough general admission tickets available");
                 }
                 OrderItem item = new OrderItem();
-                item.setEvent(event);
-                item.setSection(section);
+                item.setEventId(event.getId());
+                item.setEventTitle(event.getTitle());
+                item.setSectionId(itemReq.sectionId());
+                item.setSectionName(pricing.getSectionName());
                 item.setTicketType(itemReq.ticketType());
                 item.setUnitPrice(pricing.getPrice());
                 item.setQuantity(itemReq.quantity());
@@ -149,19 +132,16 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
-        String orderNumber = "TW-" + now.format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "-"
-                + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
-
         Order order = new Order();
-        order.setOrderNumber(orderNumber);
-        order.setUser(user);
+        order.setOrderNumber(Order.generateOrderNumber());
+        order.setUserId(userId);
         order.setStatus(OrderStatus.PENDING);
         order.setSubtotal(subtotal);
         order.setDiscountAmount(BigDecimal.ZERO);
         order.setTotalAmount(subtotal);
         order.setCurrency("USD");
         order.setPromotionCode(request.promotionCode());
-        order.setExpiresAt(now.plusMinutes(orderExpirationMinutes));
+        order.setExpiresAt(LocalDateTime.now().plusMinutes(orderExpirationMinutes));
 
         order = orderRepository.save(order);
         for (OrderItem item : orderItems) {
@@ -172,7 +152,7 @@ public class OrderServiceImpl implements OrderService {
 
         List<Long> eventIds = List.of(event.getId());
         orderKafkaProducer.publishOrderCreated(new OrderCreatedEvent(
-                UUID.randomUUID().toString(), "ORDER_CREATED", now,
+                UUID.randomUUID().toString(), "ORDER_CREATED", LocalDateTime.now(),
                 order.getId(), userId, order.getTotalAmount(), orderItems.size(), eventIds
         ));
 
@@ -181,11 +161,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderResponse getOrder(Long orderId, Long userId) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
-        if (!order.getUser().getId().equals(userId)) {
-            throw new UnauthorizedAccessException("You can only view your own orders");
-        }
+        Order order = getOrderEntity(orderId);
+        order.assertOwnedBy(userId);
         return toOrderResponse(order);
     }
 
@@ -193,9 +170,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponse getOrderByNumber(String orderNumber, Long userId) {
         Order order = orderRepository.findByOrderNumber(orderNumber)
                 .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
-        if (!order.getUser().getId().equals(userId)) {
-            throw new UnauthorizedAccessException("You can only view your own orders");
-        }
+        order.assertOwnedBy(userId);
         return toOrderResponse(order);
     }
 
@@ -209,15 +184,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public void cancelOrder(Long orderId, Long userId) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
-        if (!order.getUser().getId().equals(userId)) {
-            throw new UnauthorizedAccessException("You can only cancel your own orders");
-        }
-        if (order.getStatus() != OrderStatus.PENDING) {
-            throw new BusinessRuleException("Only pending orders can be cancelled");
-        }
-        order.setStatus(OrderStatus.CANCELLED);
+        Order order = getOrderEntity(orderId);
+        order.assertOwnedBy(userId);
+        order.cancel();
         orderRepository.save(order);
         releaseOrderSeats(order);
     }
@@ -228,7 +197,7 @@ public class OrderServiceImpl implements OrderService {
         List<Order> staleOrders = orderRepository.findByStatusAndExpiresAtBefore(
                 OrderStatus.PENDING, LocalDateTime.now());
         for (Order order : staleOrders) {
-            order.setStatus(OrderStatus.CANCELLED);
+            order.expire();
             orderRepository.save(order);
             releaseOrderSeats(order);
             log.info("Expired stale order: {}", order.getOrderNumber());
@@ -238,26 +207,41 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public void completeOrder(Long orderId) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
-        order.setStatus(OrderStatus.COMPLETED);
+        Order order = getOrderEntity(orderId);
+        order.complete();
         orderRepository.save(order);
 
         List<Ticket> tickets = ticketService.issueTicketsForOrder(order);
         List<String> ticketCodes = tickets.stream().map(Ticket::getTicketCode).toList();
 
+        String userEmail = userService.getUserEntityById(order.getUserId()).getEmail();
         orderKafkaProducer.publishOrderCompleted(new OrderCompletedEvent(
                 UUID.randomUUID().toString(), "ORDER_COMPLETED", LocalDateTime.now(),
-                order.getId(), order.getUser().getId(), order.getOrderNumber(), ticketCodes
+                order.getId(), order.getUserId(), userEmail, order.getOrderNumber(),
+                order.getTotalAmount(), order.getCurrency(), ticketCodes
         ));
+    }
+
+    @Override
+    @Transactional
+    public void markPaymentProcessing(Long orderId) {
+        Order order = getOrderEntity(orderId);
+        order.markPaymentProcessing();
+        orderRepository.save(order);
+    }
+
+    @Override
+    public Order getOrderEntity(Long orderId) {
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
     }
 
     private void releaseOrderSeats(Order order) {
         for (OrderItem item : order.getItems()) {
-            if (item.getSeat() != null) {
-                seatAvailabilityService.releaseSeat(item.getEvent().getId(), item.getSeat().getId());
+            if (item.getSeatId() != null) {
+                seatAvailabilityService.releaseSeat(item.getEventId(), item.getSeatId());
             } else {
-                seatAvailabilityService.releaseGA(item.getEvent().getId(), item.getSection().getId(), item.getQuantity());
+                seatAvailabilityService.releaseGA(item.getEventId(), item.getSectionId(), item.getQuantity());
             }
         }
     }
@@ -266,12 +250,12 @@ public class OrderServiceImpl implements OrderService {
         List<OrderItemResponse> items = order.getItems().stream()
                 .map(item -> new OrderItemResponse(
                         item.getId(),
-                        item.getEvent().getId(),
-                        item.getEvent().getTitle(),
-                        item.getSection().getId(),
-                        item.getSection().getName(),
-                        item.getSeat() != null ? item.getSeat().getId() : null,
-                        item.getSeat() != null ? item.getSeat().getLabel() : null,
+                        item.getEventId(),
+                        item.getEventTitle(),
+                        item.getSectionId(),
+                        item.getSectionName(),
+                        item.getSeatId(),
+                        item.getSeatLabel(),
                         item.getTicketType(),
                         item.getUnitPrice(),
                         item.getQuantity()

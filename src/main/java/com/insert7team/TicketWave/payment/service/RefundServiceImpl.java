@@ -1,10 +1,10 @@
 package com.insert7team.TicketWave.payment.service;
 
-import com.insert7team.TicketWave.common.enums.OrderStatus;
-import com.insert7team.TicketWave.common.enums.PaymentStatus;
-import com.insert7team.TicketWave.common.exception.BusinessRuleException;
-import com.insert7team.TicketWave.common.exception.ResourceNotFoundException;
+import com.insert7team.TicketWave.payment.domain.PaymentStatus;
+import com.insert7team.TicketWave.shared.infrastructure.exception.BusinessRuleException;
+import com.insert7team.TicketWave.shared.infrastructure.exception.ResourceNotFoundException;
 import com.insert7team.TicketWave.order.entity.Order;
+import com.insert7team.TicketWave.order.service.OrderService;
 import com.insert7team.TicketWave.order.repository.OrderRepository;
 import com.insert7team.TicketWave.payment.dto.RefundRequest;
 import com.insert7team.TicketWave.payment.dto.RefundResponse;
@@ -14,6 +14,7 @@ import com.insert7team.TicketWave.payment.kafka.PaymentKafkaProducer;
 import com.insert7team.TicketWave.payment.kafka.RefundProcessedEvent;
 import com.insert7team.TicketWave.payment.repository.PaymentRepository;
 import com.insert7team.TicketWave.payment.repository.RefundRepository;
+import com.insert7team.TicketWave.user.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,18 +27,24 @@ public class RefundServiceImpl implements RefundService {
 
     private final RefundRepository refundRepository;
     private final PaymentRepository paymentRepository;
+    private final OrderService orderService;
     private final OrderRepository orderRepository;
     private final PaymentGateway paymentGateway;
     private final PaymentKafkaProducer paymentKafkaProducer;
+    private final UserService userService;
 
     public RefundServiceImpl(RefundRepository refundRepository, PaymentRepository paymentRepository,
-                             OrderRepository orderRepository, PaymentGateway paymentGateway,
-                             PaymentKafkaProducer paymentKafkaProducer) {
+                             OrderService orderService, OrderRepository orderRepository,
+                             PaymentGateway paymentGateway,
+                             PaymentKafkaProducer paymentKafkaProducer,
+                             UserService userService) {
         this.refundRepository = refundRepository;
         this.paymentRepository = paymentRepository;
+        this.orderService = orderService;
         this.orderRepository = orderRepository;
         this.paymentGateway = paymentGateway;
         this.paymentKafkaProducer = paymentKafkaProducer;
+        this.userService = userService;
     }
 
     @Override
@@ -60,24 +67,23 @@ public class RefundServiceImpl implements RefundService {
         refund.setPayment(payment);
         refund.setAmount(request.amount());
         refund.setReason(request.reason());
-        refund.setStatus(PaymentStatus.COMPLETED);
-        refund.setExternalRefundId(externalRefundId);
-        refund.setProcessedAt(LocalDateTime.now());
+        refund.markProcessed(externalRefundId);
         refund = refundRepository.save(refund);
 
-        Order order = payment.getOrder();
+        Order order = orderService.getOrderEntity(orderId);
         if (request.amount().compareTo(payment.getAmount()) == 0) {
-            payment.setStatus(PaymentStatus.REFUNDED);
+            payment.markRefunded();
             paymentRepository.save(payment);
-            order.setStatus(OrderStatus.REFUNDED);
+            order.markRefunded();
         } else {
-            order.setStatus(OrderStatus.PARTIALLY_REFUNDED);
+            order.markPartiallyRefunded();
         }
         orderRepository.save(order);
 
+        String userEmail = userService.getUserEntityById(order.getUserId()).getEmail();
         paymentKafkaProducer.publishRefundProcessed(new RefundProcessedEvent(
                 UUID.randomUUID().toString(), "REFUND_PROCESSED", LocalDateTime.now(),
-                refund.getId(), orderId, order.getUser().getId(), refund.getAmount(), refund.getReason()
+                refund.getId(), orderId, order.getUserId(), userEmail, refund.getAmount(), refund.getReason()
         ));
 
         return toRefundResponse(refund, orderId);
@@ -87,7 +93,7 @@ public class RefundServiceImpl implements RefundService {
     public RefundResponse getRefundStatus(Long refundId) {
         Refund refund = refundRepository.findById(refundId)
                 .orElseThrow(() -> new ResourceNotFoundException("Refund not found"));
-        return toRefundResponse(refund, refund.getPayment().getOrder().getId());
+        return toRefundResponse(refund, refund.getPayment().getOrderId());
     }
 
     @Override

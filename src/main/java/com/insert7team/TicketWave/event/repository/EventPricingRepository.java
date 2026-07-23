@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.event.repository;
 
-import com.insert7team.TicketWave.common.enums.TicketType;
+import com.insert7team.TicketWave.ticket.domain.TicketType;
 import com.insert7team.TicketWave.event.entity.EventPricing;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;

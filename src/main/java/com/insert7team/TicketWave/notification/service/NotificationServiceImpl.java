@@ -1,18 +1,14 @@
 package com.insert7team.TicketWave.notification.service;
 
-import com.insert7team.TicketWave.common.enums.NotificationChannel;
-import com.insert7team.TicketWave.common.enums.NotificationType;
-import com.insert7team.TicketWave.event.entity.Event;
+import com.insert7team.TicketWave.notification.domain.NotificationChannel;
+import com.insert7team.TicketWave.notification.domain.NotificationType;
 import com.insert7team.TicketWave.notification.entity.NotificationLog;
 import com.insert7team.TicketWave.notification.repository.NotificationLogRepository;
-import com.insert7team.TicketWave.order.entity.Order;
-import com.insert7team.TicketWave.payment.entity.Refund;
-import com.insert7team.TicketWave.ticket.entity.Ticket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -29,46 +25,41 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public void sendPurchaseConfirmation(Order order) {
-        String subject = "Order Confirmed - " + order.getOrderNumber();
+    public void sendPurchaseConfirmation(Long userId, String email, String orderNumber,
+                                          BigDecimal totalAmount, String currency) {
+        String subject = "Order Confirmed - " + orderNumber;
         String body = String.format("Your order %s has been confirmed. Total: %s %s",
-                order.getOrderNumber(), order.getTotalAmount(), order.getCurrency());
-        sendAndLog(order.getUser().getId(), order.getUser().getEmail(), subject, body,
-                NotificationType.PURCHASE_CONFIRMATION);
+                orderNumber, totalAmount, currency);
+        sendAndLog(userId, email, subject, body, NotificationType.PURCHASE_CONFIRMATION);
     }
 
     @Override
-    public void sendTicketIssued(Ticket ticket) {
-        String subject = "Your Ticket - " + ticket.getEvent().getTitle();
+    public void sendTicketIssued(Long userId, String email, String eventTitle, String ticketCode) {
+        String subject = "Your Ticket - " + eventTitle;
         String body = String.format("Your ticket for %s is ready. Ticket code: %s. Show this at the venue.",
-                ticket.getEvent().getTitle(), ticket.getTicketCode());
-        sendAndLog(ticket.getUser().getId(), ticket.getUser().getEmail(), subject, body,
-                NotificationType.TICKET_ISSUED);
+                eventTitle, ticketCode);
+        sendAndLog(userId, email, subject, body, NotificationType.TICKET_ISSUED);
     }
 
     @Override
-    public void sendEventChanged(Event event, String changeDescription) {
-        String subject = "Event Update - " + event.getTitle();
-        String body = String.format("The event '%s' has been updated: %s", event.getTitle(), changeDescription);
-        log.info("Event changed notification for event {}: {}", event.getId(), changeDescription);
-        // In a real system, we'd look up all ticket holders and notify each one
+    public void sendEventChanged(Long eventId, String eventTitle, String changeDescription) {
+        String subject = "Event Update - " + eventTitle;
+        String body = String.format("The event '%s' has been updated: %s", eventTitle, changeDescription);
+        log.info("Event changed notification for event {}: {}", eventId, changeDescription);
     }
 
     @Override
-    public void sendEventCancelled(Event event) {
-        String subject = "Event Cancelled - " + event.getTitle();
+    public void sendEventCancelled(Long eventId, String eventTitle) {
+        String subject = "Event Cancelled - " + eventTitle;
         String body = String.format("The event '%s' has been cancelled. Refunds will be processed automatically.",
-                event.getTitle());
-        log.info("Event cancelled notification for event {}", event.getId());
+                eventTitle);
+        log.info("Event cancelled notification for event {}", eventId);
     }
 
     @Override
-    public void sendRefundProcessed(Refund refund) {
+    public void sendRefundProcessed(Long userId, String email, BigDecimal amount, String reason) {
         String subject = "Refund Processed";
-        String body = String.format("Your refund of %s has been processed. Reason: %s",
-                refund.getAmount(), refund.getReason());
-        Long userId = refund.getPayment().getOrder().getUser().getId();
-        String email = refund.getPayment().getOrder().getUser().getEmail();
+        String body = String.format("Your refund of %s has been processed. Reason: %s", amount, reason);
         sendAndLog(userId, email, subject, body, NotificationType.REFUND_PROCESSED);
     }
 
@@ -80,14 +71,12 @@ public class NotificationServiceImpl implements NotificationService {
                 boolean success = emailSender.sendEmail(notification.getRecipientEmail(),
                         notification.getSubject(), notification.getBody());
                 if (success) {
-                    notification.setSent(true);
-                    notification.setSentAt(LocalDateTime.now());
-                    notification.setErrorMessage(null);
+                    notification.markSent();
                     notificationLogRepository.save(notification);
                     log.info("Retry successful for notification {}", notification.getId());
                 }
             } catch (Exception e) {
-                notification.setErrorMessage(e.getMessage());
+                notification.markFailed(e.getMessage());
                 notificationLogRepository.save(notification);
                 log.warn("Retry failed for notification {}: {}", notification.getId(), e.getMessage());
             }
@@ -95,23 +84,16 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     private void sendAndLog(Long userId, String email, String subject, String body, NotificationType type) {
-        NotificationLog notification = new NotificationLog();
-        notification.setUserId(userId);
-        notification.setRecipientEmail(email);
-        notification.setType(type);
-        notification.setChannel(NotificationChannel.EMAIL);
-        notification.setSubject(subject);
-        notification.setBody(body);
+        NotificationLog notification = NotificationLog.create(userId, email, type,
+                NotificationChannel.EMAIL, subject, body);
 
         try {
             boolean success = emailSender.sendEmail(email, subject, body);
-            notification.setSent(success);
             if (success) {
-                notification.setSentAt(LocalDateTime.now());
+                notification.markSent();
             }
         } catch (Exception e) {
-            notification.setSent(false);
-            notification.setErrorMessage(e.getMessage());
+            notification.markFailed(e.getMessage());
             log.error("Failed to send notification to {}: {}", email, e.getMessage());
         }
         notificationLogRepository.save(notification);

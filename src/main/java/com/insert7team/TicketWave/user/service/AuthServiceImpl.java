@@ -1,7 +1,7 @@
 package com.insert7team.TicketWave.user.service;
 
-import com.insert7team.TicketWave.common.enums.UserRole;
-import com.insert7team.TicketWave.common.exception.DuplicateResourceException;
+import com.insert7team.TicketWave.user.domain.UserRole;
+import com.insert7team.TicketWave.shared.infrastructure.exception.DuplicateResourceException;
 import com.insert7team.TicketWave.user.dto.LoginRequest;
 import com.insert7team.TicketWave.user.dto.LoginResponse;
 import com.insert7team.TicketWave.user.dto.RegisterRequest;

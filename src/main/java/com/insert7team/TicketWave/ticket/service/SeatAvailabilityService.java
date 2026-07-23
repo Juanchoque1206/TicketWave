@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.ticket.service;
 
-import com.insert7team.TicketWave.common.enums.SeatStatus;
+import com.insert7team.TicketWave.venue.domain.SeatStatus;
 import com.insert7team.TicketWave.ticket.dto.SeatAvailabilityResponse;
 
 import java.time.Duration;

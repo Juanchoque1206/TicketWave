@@ -1,8 +1,8 @@
 package com.insert7team.TicketWave.event.controller;
 
-import com.insert7team.TicketWave.common.dto.ApiResponse;
-import com.insert7team.TicketWave.common.dto.PagedResponse;
-import com.insert7team.TicketWave.common.enums.EventCategory;
+import com.insert7team.TicketWave.shared.domain.dto.ApiResponse;
+import com.insert7team.TicketWave.shared.domain.dto.PagedResponse;
+import com.insert7team.TicketWave.event.domain.EventCategory;
 import com.insert7team.TicketWave.event.dto.EventSearchCriteria;
 import com.insert7team.TicketWave.event.dto.EventSummaryResponse;
 import com.insert7team.TicketWave.event.service.EventSearchService;

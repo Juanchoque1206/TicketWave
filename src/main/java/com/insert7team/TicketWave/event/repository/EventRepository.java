@@ -1,7 +1,7 @@
 package com.insert7team.TicketWave.event.repository;
 
-import com.insert7team.TicketWave.common.enums.EventCategory;
-import com.insert7team.TicketWave.common.enums.EventStatus;
+import com.insert7team.TicketWave.event.domain.EventCategory;
+import com.insert7team.TicketWave.event.domain.EventStatus;
 import com.insert7team.TicketWave.event.entity.Event;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,9 +16,9 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     Page<Event> findByStatus(EventStatus status, Pageable pageable);
 
     @Query("SELECT e FROM Event e WHERE e.status = :status " +
-           "AND (:city IS NULL OR LOWER(e.venue.city) = LOWER(:city)) " +
+           "AND (:city IS NULL OR LOWER(e.venueCity) = LOWER(:city)) " +
            "AND (:artist IS NULL OR LOWER(e.artist) LIKE LOWER(CONCAT('%', :artist, '%'))) " +
-           "AND (:venueId IS NULL OR e.venue.id = :venueId) " +
+           "AND (:venueId IS NULL OR e.venueId = :venueId) " +
            "AND (:dateFrom IS NULL OR e.eventDate >= :dateFrom) " +
            "AND (:dateTo IS NULL OR e.eventDate <= :dateTo) " +
            "AND (:category IS NULL OR e.category = :category)")

@@ -1,8 +1,7 @@
 package com.insert7team.TicketWave.event.entity;
 
-import com.insert7team.TicketWave.common.entity.BaseEntity;
-import com.insert7team.TicketWave.common.enums.TicketType;
-import com.insert7team.TicketWave.venue.entity.Section;
+import com.insert7team.TicketWave.shared.infrastructure.persistence.BaseEntity;
+import com.insert7team.TicketWave.ticket.domain.TicketType;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 
@@ -16,9 +15,11 @@ public class EventPricing extends BaseEntity {
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "section_id", nullable = false)
-    private Section section;
+    @Column(name = "section_id", nullable = false)
+    private Long sectionId;
+
+    @Column(length = 100)
+    private String sectionName;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -35,8 +36,10 @@ public class EventPricing extends BaseEntity {
 
     public Event getEvent() { return event; }
     public void setEvent(Event event) { this.event = event; }
-    public Section getSection() { return section; }
-    public void setSection(Section section) { this.section = section; }
+    public Long getSectionId() { return sectionId; }
+    public void setSectionId(Long sectionId) { this.sectionId = sectionId; }
+    public String getSectionName() { return sectionName; }
+    public void setSectionName(String sectionName) { this.sectionName = sectionName; }
     public TicketType getTicketType() { return ticketType; }
     public void setTicketType(TicketType ticketType) { this.ticketType = ticketType; }
     public BigDecimal getPrice() { return price; }

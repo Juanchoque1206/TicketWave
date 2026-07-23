@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.promotion.repository;
 
-import com.insert7team.TicketWave.common.enums.PromotionScope;
+import com.insert7team.TicketWave.promotion.domain.PromotionScope;
 import com.insert7team.TicketWave.promotion.entity.Promotion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;

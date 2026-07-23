@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.user.controller;
 
-import com.insert7team.TicketWave.common.dto.ApiResponse;
+import com.insert7team.TicketWave.shared.domain.dto.ApiResponse;
 import com.insert7team.TicketWave.user.dto.UpdateProfileRequest;
 import com.insert7team.TicketWave.user.dto.UserProfileResponse;
 import com.insert7team.TicketWave.user.entity.User;

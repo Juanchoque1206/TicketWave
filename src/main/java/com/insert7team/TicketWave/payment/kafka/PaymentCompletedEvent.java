@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.payment.kafka;
 
-import com.insert7team.TicketWave.common.enums.PaymentMethod;
+import com.insert7team.TicketWave.payment.domain.PaymentMethod;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

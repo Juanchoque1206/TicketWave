@@ -1,32 +1,39 @@
 package com.insert7team.TicketWave.ticket.service;
 
-import com.insert7team.TicketWave.common.enums.TicketStatus;
-import com.insert7team.TicketWave.common.exception.BusinessRuleException;
-import com.insert7team.TicketWave.common.exception.ResourceNotFoundException;
-import com.insert7team.TicketWave.common.exception.UnauthorizedAccessException;
+import com.insert7team.TicketWave.shared.infrastructure.exception.ResourceNotFoundException;
+import com.insert7team.TicketWave.shared.infrastructure.exception.UnauthorizedAccessException;
+import com.insert7team.TicketWave.event.entity.Event;
+import com.insert7team.TicketWave.event.repository.EventRepository;
 import com.insert7team.TicketWave.order.entity.Order;
 import com.insert7team.TicketWave.order.entity.OrderItem;
 import com.insert7team.TicketWave.ticket.dto.DigitalTicketResponse;
 import com.insert7team.TicketWave.ticket.dto.TicketResponse;
 import com.insert7team.TicketWave.ticket.entity.Ticket;
 import com.insert7team.TicketWave.ticket.repository.TicketRepository;
+import com.insert7team.TicketWave.user.entity.User;
+import com.insert7team.TicketWave.user.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class TicketServiceImpl implements TicketService {
 
     private final TicketRepository ticketRepository;
     private final SeatAvailabilityService seatAvailabilityService;
+    private final EventRepository eventRepository;
+    private final UserService userService;
 
     public TicketServiceImpl(TicketRepository ticketRepository,
-                             SeatAvailabilityService seatAvailabilityService) {
+                             SeatAvailabilityService seatAvailabilityService,
+                             EventRepository eventRepository,
+                             UserService userService) {
         this.ticketRepository = ticketRepository;
         this.seatAvailabilityService = seatAvailabilityService;
+        this.eventRepository = eventRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -43,13 +50,13 @@ public class TicketServiceImpl implements TicketService {
         return new DigitalTicketResponse(
                 ticket.getTicketCode(),
                 ticket.getQrCodeData(),
-                ticket.getEvent().getTitle(),
-                ticket.getEvent().getEventDate(),
-                ticket.getEvent().getVenue().getName(),
-                ticket.getEvent().getVenue().getAddress(),
-                ticket.getSection().getName(),
-                ticket.getSeat() != null ? ticket.getSeat().getLabel() : null,
-                ticket.getUser().getFirstName() + " " + ticket.getUser().getLastName(),
+                ticket.getEventTitle(),
+                ticket.getEventDate(),
+                ticket.getVenueName(),
+                ticket.getVenueAddress(),
+                ticket.getSectionName(),
+                ticket.getSeatLabel(),
+                ticket.getHolderName(),
                 ticket.getStatus()
         );
     }
@@ -64,24 +71,28 @@ public class TicketServiceImpl implements TicketService {
     @Override
     @Transactional
     public List<Ticket> issueTicketsForOrder(Order order) {
+        Event event = eventRepository.findById(order.getItems().get(0).getEventId())
+                .orElseThrow(() -> new ResourceNotFoundException("Event not found"));
+        User user = userService.getUserEntityById(order.getUserId());
+        String holderName = user.getFirstName() + " " + user.getLastName();
+
         List<Ticket> tickets = new ArrayList<>();
         for (OrderItem item : order.getItems()) {
             for (int i = 0; i < item.getQuantity(); i++) {
-                Ticket ticket = new Ticket();
-                ticket.setTicketCode(UUID.randomUUID().toString());
-                ticket.setEvent(item.getEvent());
-                ticket.setUser(order.getUser());
-                ticket.setSeat(item.getSeat());
-                ticket.setSection(item.getSection());
-                ticket.setTicketType(item.getTicketType());
-                ticket.setStatus(TicketStatus.CONFIRMED);
-                ticket.setPrice(item.getUnitPrice());
-                ticket.setQrCodeData("TW:" + ticket.getTicketCode());
+                Ticket ticket = Ticket.issue(
+                        item.getEventId(), order.getUserId(),
+                        item.getSectionId(), item.getSeatId(),
+                        item.getTicketType(), item.getUnitPrice(),
+                        item.getEventTitle(), event.getEventDate(),
+                        event.getVenueName(), null,
+                        item.getSectionName(), item.getSeatLabel(),
+                        holderName
+                );
 
-                if (item.getSeat() != null) {
-                    seatAvailabilityService.confirmSeat(item.getEvent().getId(), item.getSeat().getId());
+                if (item.getSeatId() != null) {
+                    seatAvailabilityService.confirmSeat(item.getEventId(), item.getSeatId());
                 } else {
-                    seatAvailabilityService.confirmGA(item.getEvent().getId(), item.getSection().getId(), 1);
+                    seatAvailabilityService.confirmGA(item.getEventId(), item.getSectionId(), 1);
                 }
 
                 tickets.add(ticketRepository.save(ticket));
@@ -95,19 +106,16 @@ public class TicketServiceImpl implements TicketService {
     public void cancelTicket(Long ticketId, Long userId) {
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new ResourceNotFoundException("Ticket not found with id: " + ticketId));
-        if (!ticket.getUser().getId().equals(userId)) {
+        if (!ticket.getUserId().equals(userId)) {
             throw new UnauthorizedAccessException("You can only cancel your own tickets");
         }
-        if (ticket.getStatus() == TicketStatus.CANCELLED || ticket.getStatus() == TicketStatus.USED) {
-            throw new BusinessRuleException("Ticket cannot be cancelled in its current status");
-        }
-        ticket.setStatus(TicketStatus.CANCELLED);
+        ticket.cancel();
         ticketRepository.save(ticket);
 
-        if (ticket.getSeat() != null) {
-            seatAvailabilityService.releaseSeat(ticket.getEvent().getId(), ticket.getSeat().getId());
+        if (ticket.getSeatId() != null) {
+            seatAvailabilityService.releaseSeat(ticket.getEventId(), ticket.getSeatId());
         } else {
-            seatAvailabilityService.releaseGA(ticket.getEvent().getId(), ticket.getSection().getId(), 1);
+            seatAvailabilityService.releaseGA(ticket.getEventId(), ticket.getSectionId(), 1);
         }
     }
 
@@ -116,10 +124,7 @@ public class TicketServiceImpl implements TicketService {
     public void markTicketUsed(String ticketCode) {
         Ticket ticket = ticketRepository.findByTicketCode(ticketCode)
                 .orElseThrow(() -> new ResourceNotFoundException("Ticket not found with code: " + ticketCode));
-        if (ticket.getStatus() != TicketStatus.CONFIRMED) {
-            throw new BusinessRuleException("Ticket is not in a valid state for entry");
-        }
-        ticket.setStatus(TicketStatus.USED);
+        ticket.markUsed();
         ticketRepository.save(ticket);
     }
 
@@ -127,12 +132,12 @@ public class TicketServiceImpl implements TicketService {
         return new TicketResponse(
                 ticket.getId(),
                 ticket.getTicketCode(),
-                ticket.getEvent().getId(),
-                ticket.getEvent().getTitle(),
-                ticket.getEvent().getEventDate(),
-                ticket.getEvent().getVenue().getName(),
-                ticket.getSection().getName(),
-                ticket.getSeat() != null ? ticket.getSeat().getLabel() : null,
+                ticket.getEventId(),
+                ticket.getEventTitle(),
+                ticket.getEventDate(),
+                ticket.getVenueName(),
+                ticket.getSectionName(),
+                ticket.getSeatLabel(),
                 ticket.getTicketType(),
                 ticket.getStatus(),
                 ticket.getPrice(),

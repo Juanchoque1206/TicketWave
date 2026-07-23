@@ -1,12 +1,9 @@
 package com.insert7team.TicketWave.ticket.controller;
 
-import com.insert7team.TicketWave.common.dto.ApiResponse;
+import com.insert7team.TicketWave.shared.domain.dto.ApiResponse;
 import com.insert7team.TicketWave.ticket.dto.DigitalTicketResponse;
-import com.insert7team.TicketWave.ticket.dto.SeatAvailabilityResponse;
 import com.insert7team.TicketWave.ticket.dto.TicketResponse;
-import com.insert7team.TicketWave.ticket.service.SeatAvailabilityService;
 import com.insert7team.TicketWave.ticket.service.TicketService;
-import com.insert7team.TicketWave.user.entity.User;
 import com.insert7team.TicketWave.user.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,8 +27,8 @@ public class TicketController {
     @GetMapping("/me")
     public ResponseEntity<ApiResponse<List<TicketResponse>>> getUserTickets(
             @AuthenticationPrincipal UserDetails userDetails) {
-        User user = userService.getUserEntityByEmail(userDetails.getUsername());
-        List<TicketResponse> response = ticketService.getUserTickets(user.getId());
+        Long userId = userService.getUserEntityByEmail(userDetails.getUsername()).getId();
+        List<TicketResponse> response = ticketService.getUserTickets(userId);
         return ResponseEntity.ok(ApiResponse.ok(response));
     }
 
@@ -50,8 +47,8 @@ public class TicketController {
     @PostMapping("/{ticketId}/cancel")
     public ResponseEntity<ApiResponse<Void>> cancelTicket(@PathVariable Long ticketId,
                                                            @AuthenticationPrincipal UserDetails userDetails) {
-        User user = userService.getUserEntityByEmail(userDetails.getUsername());
-        ticketService.cancelTicket(ticketId, user.getId());
+        Long userId = userService.getUserEntityByEmail(userDetails.getUsername()).getId();
+        ticketService.cancelTicket(ticketId, userId);
         return ResponseEntity.ok(ApiResponse.ok("Ticket cancelled", null));
     }
 

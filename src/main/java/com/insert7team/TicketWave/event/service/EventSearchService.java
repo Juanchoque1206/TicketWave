@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.event.service;
 
-import com.insert7team.TicketWave.common.dto.PagedResponse;
+import com.insert7team.TicketWave.shared.domain.dto.PagedResponse;
 import com.insert7team.TicketWave.event.dto.EventSearchCriteria;
 import com.insert7team.TicketWave.event.dto.EventSummaryResponse;
 import org.springframework.data.domain.Pageable;

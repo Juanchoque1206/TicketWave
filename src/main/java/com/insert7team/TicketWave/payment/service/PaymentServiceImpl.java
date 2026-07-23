@@ -1,12 +1,10 @@
 package com.insert7team.TicketWave.payment.service;
 
-import com.insert7team.TicketWave.common.enums.OrderStatus;
-import com.insert7team.TicketWave.common.enums.PaymentStatus;
-import com.insert7team.TicketWave.common.exception.BusinessRuleException;
-import com.insert7team.TicketWave.common.exception.PaymentFailedException;
-import com.insert7team.TicketWave.common.exception.ResourceNotFoundException;
+import com.insert7team.TicketWave.payment.domain.PaymentStatus;
+import com.insert7team.TicketWave.shared.infrastructure.exception.BusinessRuleException;
+import com.insert7team.TicketWave.shared.infrastructure.exception.PaymentFailedException;
+import com.insert7team.TicketWave.shared.infrastructure.exception.ResourceNotFoundException;
 import com.insert7team.TicketWave.order.entity.Order;
-import com.insert7team.TicketWave.order.repository.OrderRepository;
 import com.insert7team.TicketWave.order.service.OrderService;
 import com.insert7team.TicketWave.payment.dto.PaymentRequest;
 import com.insert7team.TicketWave.payment.dto.PaymentResponse;
@@ -26,16 +24,14 @@ import java.util.UUID;
 public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentRepository paymentRepository;
-    private final OrderRepository orderRepository;
     private final OrderService orderService;
     private final PaymentGateway paymentGateway;
     private final PaymentKafkaProducer paymentKafkaProducer;
 
-    public PaymentServiceImpl(PaymentRepository paymentRepository, OrderRepository orderRepository,
+    public PaymentServiceImpl(PaymentRepository paymentRepository,
                               OrderService orderService, PaymentGateway paymentGateway,
                               PaymentKafkaProducer paymentKafkaProducer) {
         this.paymentRepository = paymentRepository;
-        this.orderRepository = orderRepository;
         this.orderService = orderService;
         this.paymentGateway = paymentGateway;
         this.paymentKafkaProducer = paymentKafkaProducer;
@@ -44,18 +40,13 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     @Transactional
     public PaymentResponse initiatePayment(Long orderId, PaymentRequest request) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
+        Order order = orderService.getOrderEntity(orderId);
 
-        if (order.getStatus() != OrderStatus.PENDING) {
-            throw new BusinessRuleException("Order is not in a payable state");
-        }
-        if (LocalDateTime.now().isAfter(order.getExpiresAt())) {
+        if (order.isExpired()) {
             throw new BusinessRuleException("Order has expired");
         }
 
-        order.setStatus(OrderStatus.PAYMENT_PROCESSING);
-        orderRepository.save(order);
+        orderService.markPaymentProcessing(orderId);
 
         String externalId = paymentGateway.processPayment(
                 order.getTotalAmount(), order.getCurrency(), request.paymentMethod(),
@@ -63,7 +54,7 @@ public class PaymentServiceImpl implements PaymentService {
         );
 
         Payment payment = new Payment();
-        payment.setOrder(order);
+        payment.setOrderId(orderId);
         payment.setExternalPaymentId(externalId);
         payment.setAmount(order.getTotalAmount());
         payment.setCurrency(order.getCurrency());
@@ -72,8 +63,7 @@ public class PaymentServiceImpl implements PaymentService {
         payment = paymentRepository.save(payment);
 
         // In mock mode, auto-complete the payment
-        payment.setStatus(PaymentStatus.COMPLETED);
-        payment.setPaidAt(LocalDateTime.now());
+        payment.markCompleted();
         paymentRepository.save(payment);
 
         orderService.completeOrder(orderId);
@@ -104,26 +94,26 @@ public class PaymentServiceImpl implements PaymentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Payment not found"));
 
         if ("success".equalsIgnoreCase(payload.status())) {
-            payment.setStatus(PaymentStatus.COMPLETED);
-            payment.setPaidAt(LocalDateTime.now());
+            payment.markCompleted();
             paymentRepository.save(payment);
-            orderService.completeOrder(payment.getOrder().getId());
+            orderService.completeOrder(payment.getOrderId());
 
             paymentKafkaProducer.publishPaymentCompleted(new PaymentCompletedEvent(
                     UUID.randomUUID().toString(), "PAYMENT_COMPLETED", LocalDateTime.now(),
-                    payment.getId(), payment.getOrder().getId(), payment.getAmount(), payment.getPaymentMethod()
+                    payment.getId(), payment.getOrderId(), payment.getAmount(), payment.getPaymentMethod()
             ));
         } else {
-            payment.setStatus(PaymentStatus.FAILED);
-            payment.setFailureReason(payload.failureReason());
+            payment.markFailed(payload.failureReason());
             paymentRepository.save(payment);
-            orderService.cancelOrder(payment.getOrder().getId(), payment.getOrder().getUser().getId());
+
+            Order order = orderService.getOrderEntity(payment.getOrderId());
+            orderService.cancelOrder(payment.getOrderId(), order.getUserId());
         }
     }
 
     private PaymentResponse toPaymentResponse(Payment payment) {
         return new PaymentResponse(
-                payment.getId(), payment.getOrder().getId(), payment.getAmount(),
+                payment.getId(), payment.getOrderId(), payment.getAmount(),
                 payment.getCurrency(), payment.getPaymentMethod(), payment.getStatus(),
                 payment.getExternalPaymentId(), payment.getPaidAt()
         );

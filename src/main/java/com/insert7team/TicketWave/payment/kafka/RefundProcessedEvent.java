@@ -10,6 +10,7 @@ public record RefundProcessedEvent(
         Long refundId,
         Long orderId,
         Long userId,
+        String email,
         BigDecimal amount,
         String reason
 ) {}

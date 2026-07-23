@@ -1,8 +1,8 @@
 package com.insert7team.TicketWave.notification.entity;
 
-import com.insert7team.TicketWave.common.entity.BaseEntity;
-import com.insert7team.TicketWave.common.enums.NotificationChannel;
-import com.insert7team.TicketWave.common.enums.NotificationType;
+import com.insert7team.TicketWave.shared.infrastructure.persistence.BaseEntity;
+import com.insert7team.TicketWave.notification.domain.NotificationChannel;
+import com.insert7team.TicketWave.notification.domain.NotificationType;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -38,22 +38,41 @@ public class NotificationLog extends BaseEntity {
     @Column(length = 500)
     private String errorMessage;
 
+    // --- Domain behavior ---
+
+    public static NotificationLog create(Long userId, String recipientEmail,
+                                          NotificationType type, NotificationChannel channel,
+                                          String subject, String body) {
+        NotificationLog log = new NotificationLog();
+        log.userId = userId;
+        log.recipientEmail = recipientEmail;
+        log.type = type;
+        log.channel = channel;
+        log.subject = subject;
+        log.body = body;
+        return log;
+    }
+
+    public void markSent() {
+        this.sent = true;
+        this.sentAt = LocalDateTime.now();
+        this.errorMessage = null;
+    }
+
+    public void markFailed(String error) {
+        this.sent = false;
+        this.errorMessage = error;
+    }
+
+    // --- Getters ---
+
     public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
     public String getRecipientEmail() { return recipientEmail; }
-    public void setRecipientEmail(String recipientEmail) { this.recipientEmail = recipientEmail; }
     public NotificationType getType() { return type; }
-    public void setType(NotificationType type) { this.type = type; }
     public NotificationChannel getChannel() { return channel; }
-    public void setChannel(NotificationChannel channel) { this.channel = channel; }
     public String getSubject() { return subject; }
-    public void setSubject(String subject) { this.subject = subject; }
     public String getBody() { return body; }
-    public void setBody(String body) { this.body = body; }
     public boolean isSent() { return sent; }
-    public void setSent(boolean sent) { this.sent = sent; }
     public LocalDateTime getSentAt() { return sentAt; }
-    public void setSentAt(LocalDateTime sentAt) { this.sentAt = sentAt; }
     public String getErrorMessage() { return errorMessage; }
-    public void setErrorMessage(String errorMessage) { this.errorMessage = errorMessage; }
 }

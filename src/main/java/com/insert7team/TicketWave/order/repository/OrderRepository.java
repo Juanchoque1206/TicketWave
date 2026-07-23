@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.order.repository;
 
-import com.insert7team.TicketWave.common.enums.OrderStatus;
+import com.insert7team.TicketWave.order.domain.OrderStatus;
 import com.insert7team.TicketWave.order.entity.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.fraud.controller;
 
-import com.insert7team.TicketWave.common.dto.ApiResponse;
+import com.insert7team.TicketWave.shared.domain.dto.ApiResponse;
 import com.insert7team.TicketWave.fraud.entity.FraudAlert;
 import com.insert7team.TicketWave.fraud.service.FraudDetectionService;
 import org.springframework.http.ResponseEntity;

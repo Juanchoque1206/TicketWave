@@ -1,7 +1,7 @@
 package com.insert7team.TicketWave.payment.dto;
 
-import com.insert7team.TicketWave.common.enums.PaymentMethod;
-import com.insert7team.TicketWave.common.enums.PaymentStatus;
+import com.insert7team.TicketWave.payment.domain.PaymentMethod;
+import com.insert7team.TicketWave.payment.domain.PaymentStatus;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

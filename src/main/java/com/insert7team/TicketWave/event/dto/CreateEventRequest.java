@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.event.dto;
 
-import com.insert7team.TicketWave.common.enums.EventCategory;
+import com.insert7team.TicketWave.event.domain.EventCategory;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

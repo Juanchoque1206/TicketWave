@@ -1,7 +1,7 @@
 package com.insert7team.TicketWave.venue.controller;
 
-import com.insert7team.TicketWave.common.dto.ApiResponse;
-import com.insert7team.TicketWave.common.dto.PagedResponse;
+import com.insert7team.TicketWave.shared.domain.dto.ApiResponse;
+import com.insert7team.TicketWave.shared.domain.dto.PagedResponse;
 import com.insert7team.TicketWave.venue.dto.*;
 import com.insert7team.TicketWave.venue.service.VenueService;
 import jakarta.validation.Valid;

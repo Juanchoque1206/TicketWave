@@ -1,20 +1,19 @@
 package com.insert7team.TicketWave.payment.entity;
 
-import com.insert7team.TicketWave.common.entity.BaseEntity;
-import com.insert7team.TicketWave.common.enums.PaymentMethod;
-import com.insert7team.TicketWave.common.enums.PaymentStatus;
-import com.insert7team.TicketWave.order.entity.Order;
+import com.insert7team.TicketWave.shared.domain.model.AggregateRoot;
+import com.insert7team.TicketWave.payment.domain.PaymentMethod;
+import com.insert7team.TicketWave.payment.domain.PaymentStatus;
+import com.insert7team.TicketWave.shared.infrastructure.exception.BusinessRuleException;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "payments")
-public class Payment extends BaseEntity {
+public class Payment extends AggregateRoot {
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", nullable = false, unique = true)
-    private Order order;
+    @Column(name = "order_id", nullable = false, unique = true)
+    private Long orderId;
 
     @Column(length = 200)
     private String externalPaymentId;
@@ -41,8 +40,29 @@ public class Payment extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String gatewayResponse;
 
-    public Order getOrder() { return order; }
-    public void setOrder(Order order) { this.order = order; }
+    // --- Domain behavior ---
+
+    public void markCompleted() {
+        if (this.status != PaymentStatus.PROCESSING) {
+            throw new BusinessRuleException("Can only complete a processing payment");
+        }
+        this.status = PaymentStatus.COMPLETED;
+        this.paidAt = LocalDateTime.now();
+    }
+
+    public void markFailed(String reason) {
+        this.status = PaymentStatus.FAILED;
+        this.failureReason = reason;
+    }
+
+    public void markRefunded() {
+        this.status = PaymentStatus.REFUNDED;
+    }
+
+    // --- Getters and setters ---
+
+    public Long getOrderId() { return orderId; }
+    public void setOrderId(Long orderId) { this.orderId = orderId; }
     public String getExternalPaymentId() { return externalPaymentId; }
     public void setExternalPaymentId(String externalPaymentId) { this.externalPaymentId = externalPaymentId; }
     public BigDecimal getAmount() { return amount; }

@@ -1,7 +1,7 @@
 package com.insert7team.TicketWave.venue.service;
 
-import com.insert7team.TicketWave.common.dto.PagedResponse;
-import com.insert7team.TicketWave.common.exception.ResourceNotFoundException;
+import com.insert7team.TicketWave.shared.domain.dto.PagedResponse;
+import com.insert7team.TicketWave.shared.infrastructure.exception.ResourceNotFoundException;
 import com.insert7team.TicketWave.venue.dto.*;
 import com.insert7team.TicketWave.venue.entity.Seat;
 import com.insert7team.TicketWave.venue.entity.Section;

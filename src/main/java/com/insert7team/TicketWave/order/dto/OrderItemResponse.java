@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.order.dto;
 
-import com.insert7team.TicketWave.common.enums.TicketType;
+import com.insert7team.TicketWave.ticket.domain.TicketType;
 import java.math.BigDecimal;
 
 public record OrderItemResponse(

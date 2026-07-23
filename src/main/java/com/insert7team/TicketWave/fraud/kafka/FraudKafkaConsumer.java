@@ -2,7 +2,7 @@ package com.insert7team.TicketWave.fraud.kafka;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.insert7team.TicketWave.common.kafka.KafkaTopics;
+import com.insert7team.TicketWave.shared.infrastructure.messaging.KafkaTopics;
 import com.insert7team.TicketWave.fraud.service.FraudDetectionService;
 import com.insert7team.TicketWave.order.dto.CreateOrderRequest;
 import org.slf4j.Logger;

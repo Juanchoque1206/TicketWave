@@ -1,7 +1,7 @@
 package com.insert7team.TicketWave.user.entity;
 
-import com.insert7team.TicketWave.common.entity.BaseEntity;
-import com.insert7team.TicketWave.common.enums.UserRole;
+import com.insert7team.TicketWave.shared.infrastructure.persistence.BaseEntity;
+import com.insert7team.TicketWave.user.domain.UserRole;
 import jakarta.persistence.*;
 
 @Entity

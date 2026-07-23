@@ -2,7 +2,7 @@ package com.insert7team.TicketWave.event.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.insert7team.TicketWave.common.kafka.KafkaTopics;
+import com.insert7team.TicketWave.shared.infrastructure.messaging.KafkaTopics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;

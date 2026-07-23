@@ -7,6 +7,7 @@ public record EventChangedEvent(
         String eventType,
         LocalDateTime timestamp,
         Long eventEntityId,
+        String title,
         String changeType,
         String description,
         int affectedTicketCount

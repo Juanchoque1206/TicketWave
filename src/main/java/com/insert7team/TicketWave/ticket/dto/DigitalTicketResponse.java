@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.ticket.dto;
 
-import com.insert7team.TicketWave.common.enums.TicketStatus;
+import com.insert7team.TicketWave.ticket.domain.TicketStatus;
 import java.time.LocalDateTime;
 
 public record DigitalTicketResponse(

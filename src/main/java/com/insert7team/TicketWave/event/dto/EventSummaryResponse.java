@@ -1,7 +1,7 @@
 package com.insert7team.TicketWave.event.dto;
 
-import com.insert7team.TicketWave.common.enums.EventCategory;
-import com.insert7team.TicketWave.common.enums.EventStatus;
+import com.insert7team.TicketWave.event.domain.EventCategory;
+import com.insert7team.TicketWave.event.domain.EventStatus;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

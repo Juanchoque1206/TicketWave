@@ -1,9 +1,8 @@
 package com.insert7team.TicketWave.event.controller;
 
-import com.insert7team.TicketWave.common.dto.ApiResponse;
+import com.insert7team.TicketWave.shared.domain.dto.ApiResponse;
 import com.insert7team.TicketWave.event.dto.*;
 import com.insert7team.TicketWave.event.service.EventService;
-import com.insert7team.TicketWave.user.entity.User;
 import com.insert7team.TicketWave.user.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -32,8 +31,8 @@ public class EventController {
     public ResponseEntity<ApiResponse<EventResponse>> createEvent(
             @AuthenticationPrincipal UserDetails userDetails,
             @Valid @RequestBody CreateEventRequest request) {
-        User organizer = userService.getUserEntityByEmail(userDetails.getUsername());
-        EventResponse response = eventService.createEvent(organizer.getId(), request);
+        Long organizerId = userService.getUserEntityByEmail(userDetails.getUsername()).getId();
+        EventResponse response = eventService.createEvent(organizerId, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.ok("Event created", response));
     }
 
@@ -80,8 +79,8 @@ public class EventController {
     @GetMapping("/organizer/me")
     public ResponseEntity<ApiResponse<List<EventResponse>>> getOrganizerEvents(
             @AuthenticationPrincipal UserDetails userDetails) {
-        User organizer = userService.getUserEntityByEmail(userDetails.getUsername());
-        List<EventResponse> response = eventService.getOrganizerEvents(organizer.getId());
+        Long organizerId = userService.getUserEntityByEmail(userDetails.getUsername()).getId();
+        List<EventResponse> response = eventService.getOrganizerEvents(organizerId);
         return ResponseEntity.ok(ApiResponse.ok(response));
     }
 }

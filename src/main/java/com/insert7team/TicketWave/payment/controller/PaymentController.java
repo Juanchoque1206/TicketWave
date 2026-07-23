@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.payment.controller;
 
-import com.insert7team.TicketWave.common.dto.ApiResponse;
+import com.insert7team.TicketWave.shared.domain.dto.ApiResponse;
 import com.insert7team.TicketWave.payment.dto.*;
 import com.insert7team.TicketWave.payment.service.PaymentService;
 import com.insert7team.TicketWave.payment.service.RefundService;

@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.promotion.dto;
 
-import com.insert7team.TicketWave.common.enums.PromotionType;
+import com.insert7team.TicketWave.promotion.domain.PromotionType;
 import java.math.BigDecimal;
 
 public record PromotionValidationResponse(

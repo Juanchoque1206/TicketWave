@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.event.dto;
 
-import com.insert7team.TicketWave.common.enums.EventCategory;
+import com.insert7team.TicketWave.event.domain.EventCategory;
 import java.time.LocalDateTime;
 
 public record UpdateEventRequest(
