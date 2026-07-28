@@ -1,7 +1,7 @@
 package com.insert7team.TicketWave.config;
 
-import com.insert7team.TicketWave.notification.service.NotificationService;
-import com.insert7team.TicketWave.order.service.OrderService;
+import com.insert7team.TicketWave.notification.application.service.NotificationService;
+import com.insert7team.TicketWave.order.application.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;

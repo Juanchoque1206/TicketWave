@@ -1,6 +1,6 @@
 package com.insert7team.TicketWave.config;
 
-import com.insert7team.TicketWave.user.service.JwtService;
+import com.insert7team.TicketWave.user.infrastructure.security.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

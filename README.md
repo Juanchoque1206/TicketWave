@@ -126,3 +126,7 @@ Asynchronous communication between modules is handled via **Apache Kafka**, maki
 - **Fraud detection** - Configurable risk scoring with thresholds for alerting and blocking
 - **Multi-channel notifications** - Email, SMS, and push notifications driven by Kafka events
 - **Promotion system** - National and venue-scoped discounts with usage limits and time-bound validity
+
+
+## Kafka container
+docker run -d --name kafka -p 9092:9092 -e KAFKA_NODE_ID=1 -e KAFKA_PROCESS_ROLES=broker,controller -e KAFKA_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 -e KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER -e KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT -e KAFKA_CONTROLLER_QUORUM_VOTERS=1@localhost:9093 -e CLUSTER_ID=MkU3OEVBNTcwNTJENDM2Qk apache/kafka:latest
