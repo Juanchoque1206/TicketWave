@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Static preview; open in diagrams.net to edit (source embedded in content=). -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1058px" height="1220px" viewBox="0 0 1058 1220" content="&lt;mxfile host=&quot;app.diagrams.net&quot; version=&quot;24.0.0&quot;&gt;
+  &lt;diagram name=&quot;C3 - Mobile App Components&quot; id=&quot;ticketwave-c3-mobile&quot;&gt;
+    &lt;mxGraphModel dx=&quot;1400&quot; dy=&quot;1000&quot; grid=&quot;1&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;1&quot; pageScale=&quot;1&quot; pageWidth=&quot;1250&quot; pageHeight=&quot;1240&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;
+      &lt;root&gt;
+        &lt;mxCell id=&quot;0&quot; /&gt;
+        &lt;mxCell id=&quot;1&quot; parent=&quot;0&quot; /&gt;
+
+        &lt;!-- ===== Container boundary ===== --&gt;
+        &lt;mxCell id=&quot;boundary&quot; value=&quot;Mobile App&amp;#10;[Container: Flutter]&quot; style=&quot;rounded=8;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#1A365D;dashed=1;dashPattern=8 8;verticalAlign=bottom;align=left;fontColor=#1A365D;fontStyle=1;spacingLeft=14;spacingBottom=10;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;150&quot; width=&quot;1010&quot; height=&quot;820&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+
+        &lt;!-- ===== Layer bands ===== --&gt;
+        &lt;mxCell id=&quot;bandApp&quot; value=&quot;Application / bootstrap&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b3b3b3;dashed=1;verticalAlign=top;align=left;fontStyle=2;fontColor=#888888;spacingLeft=8;spacingTop=4;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;80&quot; y=&quot;175&quot; width=&quot;970&quot; height=&quot;115&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;bandPres&quot; value=&quot;Presentation&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b3b3b3;dashed=1;verticalAlign=top;align=left;fontStyle=2;fontColor=#888888;spacingLeft=8;spacingTop=4;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;80&quot; y=&quot;305&quot; width=&quot;970&quot; height=&quot;120&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;bandDom&quot; value=&quot;Domain&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b3b3b3;dashed=1;verticalAlign=top;align=left;fontStyle=2;fontColor=#888888;spacingLeft=8;spacingTop=4;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;80&quot; y=&quot;440&quot; width=&quot;970&quot; height=&quot;115&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;bandData&quot; value=&quot;Data&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b3b3b3;dashed=1;verticalAlign=top;align=left;fontStyle=2;fontColor=#888888;spacingLeft=8;spacingTop=4;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;80&quot; y=&quot;570&quot; width=&quot;970&quot; height=&quot;120&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;bandCore&quot; value=&quot;Core / infrastructure&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b3b3b3;dashed=1;verticalAlign=top;align=left;fontStyle=2;fontColor=#888888;spacingLeft=8;spacingTop=4;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;80&quot; y=&quot;705&quot; width=&quot;970&quot; height=&quot;120&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+
+        &lt;!-- ===== Person ===== --&gt;
+        &lt;mxCell id=&quot;cust_h&quot; value=&quot;&quot; style=&quot;ellipse;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#073B6F;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;540&quot; y=&quot;10&quot; width=&quot;42&quot; height=&quot;42&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;cust_b&quot; value=&quot;&amp;lt;b&amp;gt;Customer&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;font style='font-size:9px'&amp;gt;[Person]&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Searches, buys, and manages tickets from the app.&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#073B6F;fontColor=#ffffff;arcSize=8;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;461&quot; y=&quot;45&quot; width=&quot;200&quot; height=&quot;85&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+
+        &lt;!-- ===== Application / bootstrap ===== --&gt;
+        &lt;mxCell id=&quot;boot&quot; value=&quot;&amp;lt;b&amp;gt;App Bootstrap &amp;amp;amp; DI&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;font style='font-size:9px'&amp;gt;[Component: main.dart / MultiProvider]&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Loads prefs, builds the ApiClient, injects providers, sets theme and routes.&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6DA4;fontColor=#ffffff;arcSize=6;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;100&quot; y=&quot;205&quot; width=&quot;420&quot; height=&quot;75&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;router&quot; value=&quot;&amp;lt;b&amp;gt;Router&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;font style='font-size:9px'&amp;gt;[Component: onGenerateRoute]&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Maps routes to pages; passes arguments (eventId, orderId, ticketId).&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6DA4;fontColor=#ffffff;arcSize=6;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;560&quot; y=&quot;205&quot; width=&quot;450&quot; height=&quot;75&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+
+        &lt;!-- ===== Presentation ===== --&gt;
+        &lt;mxCell id=&quot;pages&quot; value=&quot;&amp;lt;b&amp;gt;UI Pages &amp;amp;amp; Widgets&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;font style='font-size:9px'&amp;gt;[Component: Flutter Widgets]&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Search, Event detail, Seat selection, Checkout, My tickets, Profile, Notifications, Promotions; MainShell nav.&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6DA4;fontColor=#ffffff;arcSize=6;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;100&quot; y=&quot;330&quot; width=&quot;440&quot; height=&quot;85&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;prov&quot; value=&quot;&amp;lt;b&amp;gt;State Providers&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;font style='font-size:9px'&amp;gt;[Component: provider · ChangeNotifier]&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Auth, Event, Order, Ticket, Payment. Hold UI state, call use cases, notify widgets.&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6DA4;fontColor=#ffffff;arcSize=6;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;580&quot; y=&quot;330&quot; width=&quot;430&quot; height=&quot;85&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+
+        &lt;!-- ===== Domain ===== --&gt;
+        &lt;mxCell id=&quot;uc&quot; value=&quot;&amp;lt;b&amp;gt;Use Cases&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;font style='font-size:9px'&amp;gt;[Component: Dart]&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Login, SearchEvents, PurchaseTicket, ProcessPayment, GetNotifications, GetPromotions.&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6DA4;fontColor=#ffffff;arcSize=6;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;100&quot; y=&quot;465&quot; width=&quot;440&quot; height=&quot;75&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;dom&quot; value=&quot;&amp;lt;b&amp;gt;Entities &amp;amp;amp; Repository Contracts&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;font style='font-size:9px'&amp;gt;[Component: Dart]&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;User, Event, Ticket, Seat, Payment, Promotion; abstract repository interfaces.&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6DA4;fontColor=#ffffff;arcSize=6;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;580&quot; y=&quot;465&quot; width=&quot;430&quot; height=&quot;75&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+
+        &lt;!-- ===== Data ===== --&gt;
+        &lt;mxCell id=&quot;repo&quot; value=&quot;&amp;lt;b&amp;gt;Repository Implementations&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;font style='font-size:9px'&amp;gt;[Component: Dart]&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Implement contracts; map DTOs to entities; wrap failures.&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6DA4;fontColor=#ffffff;arcSize=6;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;100&quot; y=&quot;598&quot; width=&quot;300&quot; height=&quot;80&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;ds&quot; value=&quot;&amp;lt;b&amp;gt;Remote Data Sources&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;font style='font-size:9px'&amp;gt;[Component: Dart]&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Per-feature; build requests and call the API Client.&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6DA4;fontColor=#ffffff;arcSize=6;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;430&quot; y=&quot;598&quot; width=&quot;300&quot; height=&quot;80&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;models&quot; value=&quot;&amp;lt;b&amp;gt;Models / DTOs&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;font style='font-size:9px'&amp;gt;[Component: Dart]&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;JSON (de)serialization of API payloads.&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6DA4;fontColor=#ffffff;arcSize=6;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;760&quot; y=&quot;598&quot; width=&quot;250&quot; height=&quot;80&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+
+        &lt;!-- ===== Core / infrastructure ===== --&gt;
+        &lt;mxCell id=&quot;api&quot; value=&quot;&amp;lt;b&amp;gt;API Client&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;font style='font-size:9px'&amp;gt;[Component: Dio]&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;GET/POST/PUT/DELETE; ApiResponse &amp;amp;amp; PagedResponse; error mapping.&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6DA4;fontColor=#ffffff;arcSize=6;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;100&quot; y=&quot;733&quot; width=&quot;300&quot; height=&quot;80&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;intc&quot; value=&quot;&amp;lt;b&amp;gt;Auth Interceptor&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;font style='font-size:9px'&amp;gt;[Component: Dio Interceptor]&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Attaches the Bearer JWT to requests; handles 401.&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6DA4;fontColor=#ffffff;arcSize=6;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;430&quot; y=&quot;733&quot; width=&quot;300&quot; height=&quot;80&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;store&quot; value=&quot;&amp;lt;b&amp;gt;Local Storage&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;font style='font-size:9px'&amp;gt;[Component: SharedPreferences]&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt;JWT token &amp;amp;amp; user session&quot; style=&quot;shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#438DD5;strokeColor=#2E6DA4;fontColor=#ffffff;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;775&quot; y=&quot;730&quot; width=&quot;220&quot; height=&quot;88&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+
+        &lt;!-- ===== External container ===== --&gt;
+        &lt;mxCell id=&quot;gw&quot; value=&quot;&amp;lt;b&amp;gt;API Gateway + Waiting Room&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;font style='font-size:9px'&amp;gt;[Container: Spring Cloud Gateway]&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Entry point to the TicketWave backend.&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0E5A9E;fontColor=#ffffff;arcSize=6;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;440&quot; y=&quot;1010&quot; width=&quot;290&quot; height=&quot;95&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+
+        &lt;!-- ===== Title ===== --&gt;
+        &lt;mxCell id=&quot;title&quot; value=&quot;Component diagram for TicketWave Events — Mobile App [Flutter]&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=15;fontStyle=1;fontColor=#333333;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;1140&quot; width=&quot;900&quot; height=&quot;24&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;subtitle&quot; value=&quot;Clean Architecture (feature-based): Presentation → Domain → Data, over shared Core infrastructure. Provider for state, Dio for HTTP.&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#777777;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;60&quot; y=&quot;1164&quot; width=&quot;1000&quot; height=&quot;18&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+
+        &lt;!-- ===== Relationships ===== --&gt;
+        &lt;mxCell id=&quot;c1&quot; value=&quot;Interacts with&amp;lt;br&amp;gt;[touch]&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;startArrow=none;dashed=1;strokeColor=#707070;fontColor=#404040;fontSize=9;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;cust_b&quot; target=&quot;pages&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&lt;/mxCell&gt;
+
+        &lt;mxCell id=&quot;c2&quot; value=&quot;Creates &amp;amp;amp; injects&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;startArrow=none;dashed=1;strokeColor=#707070;fontColor=#404040;fontSize=9;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;boot&quot; target=&quot;prov&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&lt;/mxCell&gt;
+        &lt;mxCell id=&quot;c3&quot; value=&quot;Creates&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;startArrow=none;dashed=1;strokeColor=#707070;fontColor=#404040;fontSize=9;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;boot&quot; target=&quot;api&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&lt;/mxCell&gt;
+        &lt;mxCell id=&quot;c4&quot; value=&quot;Configures&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;startArrow=none;dashed=1;strokeColor=#707070;fontColor=#404040;fontSize=9;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;boot&quot; target=&quot;router&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&lt;/mxCell&gt;
+
+        &lt;mxCell id=&quot;c5&quot; value=&quot;Routes to&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;startArrow=none;dashed=1;strokeColor=#707070;fontColor=#404040;fontSize=9;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;router&quot; target=&quot;pages&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&lt;/mxCell&gt;
+        &lt;mxCell id=&quot;c6&quot; value=&quot;Watches / calls&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;startArrow=none;dashed=1;strokeColor=#707070;fontColor=#404040;fontSize=9;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;pages&quot; target=&quot;prov&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&lt;/mxCell&gt;
+        &lt;mxCell id=&quot;c7&quot; value=&quot;Invokes&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;startArrow=none;dashed=1;strokeColor=#707070;fontColor=#404040;fontSize=9;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;prov&quot; target=&quot;uc&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&lt;/mxCell&gt;
+        &lt;mxCell id=&quot;c8&quot; value=&quot;Persists session in&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;startArrow=none;dashed=1;strokeColor=#707070;fontColor=#404040;fontSize=9;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;prov&quot; target=&quot;store&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&lt;/mxCell&gt;
+
+        &lt;mxCell id=&quot;c9&quot; value=&quot;Depends on contracts&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;startArrow=none;dashed=1;strokeColor=#707070;fontColor=#404040;fontSize=9;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;uc&quot; target=&quot;dom&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&lt;/mxCell&gt;
+        &lt;mxCell id=&quot;c10&quot; value=&quot;Uses repository&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;startArrow=none;dashed=1;strokeColor=#707070;fontColor=#404040;fontSize=9;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;uc&quot; target=&quot;repo&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&lt;/mxCell&gt;
+        &lt;mxCell id=&quot;c11&quot; value=&quot;Implements&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;startArrow=none;dashed=1;strokeColor=#9673a6;fontColor=#6a4a8a;fontSize=9;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;repo&quot; target=&quot;dom&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&lt;/mxCell&gt;
+
+        &lt;mxCell id=&quot;c12&quot; value=&quot;Fetches via&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;startArrow=none;dashed=1;strokeColor=#707070;fontColor=#404040;fontSize=9;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;repo&quot; target=&quot;ds&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&lt;/mxCell&gt;
+        &lt;mxCell id=&quot;c13&quot; value=&quot;Maps DTOs&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;startArrow=none;dashed=1;strokeColor=#707070;fontColor=#404040;fontSize=9;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;repo&quot; target=&quot;models&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&lt;/mxCell&gt;
+        &lt;mxCell id=&quot;c14&quot; value=&quot;Sends requests via&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;startArrow=none;dashed=1;strokeColor=#707070;fontColor=#404040;fontSize=9;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;ds&quot; target=&quot;api&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&lt;/mxCell&gt;
+        &lt;mxCell id=&quot;c15&quot; value=&quot;Deserializes into&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;startArrow=none;dashed=1;strokeColor=#707070;fontColor=#404040;fontSize=9;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;ds&quot; target=&quot;models&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&lt;/mxCell&gt;
+
+        &lt;mxCell id=&quot;c16&quot; value=&quot;Runs requests through&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;startArrow=none;dashed=1;strokeColor=#707070;fontColor=#404040;fontSize=9;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;api&quot; target=&quot;intc&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&lt;/mxCell&gt;
+        &lt;mxCell id=&quot;c17&quot; value=&quot;Reads JWT from&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;startArrow=none;dashed=1;strokeColor=#707070;fontColor=#404040;fontSize=9;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;intc&quot; target=&quot;store&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&lt;/mxCell&gt;
+
+        &lt;mxCell id=&quot;c18&quot; value=&quot;Makes API calls to&amp;lt;br&amp;gt;[JSON/HTTPS]&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;startArrow=none;dashed=1;strokeColor=#707070;fontColor=#404040;fontSize=9;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;api&quot; target=&quot;gw&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;&lt;/mxCell&gt;
+
+      &lt;/root&gt;
+    &lt;/mxGraphModel&gt;
+  &lt;/diagram&gt;
+&lt;/mxfile&gt;
+">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<path d="M 525 144 L 525 244 L 284 244 L 284 344" fill="none" stroke="#707070" stroke-width="1.4" stroke-dasharray="6 5"/>
+<polygon points="278,338 290,338 284,344" fill="#707070"/>
+<rect x="362.7" y="229" width="83.60000000000001" height="30" fill="#ffffff" opacity="0.9"/>
+<text x="404.5" y="241" font-family="Helvetica" font-size="9" fill="#404040" text-anchor="middle">Interacts with</text>
+<text x="404.5" y="253" font-family="Helvetica" font-size="9" fill="#404040" text-anchor="middle">[touch]</text>
+<path d="M 484 256.5 L 514 256.5 L 514 386.5 L 544 386.5" fill="none" stroke="#707070" stroke-width="1.4" stroke-dasharray="6 5"/>
+<polygon points="538,380.5 538,392.5 544,386.5" fill="#707070"/>
+<rect x="464.1" y="312.5" width="99.80000000000001" height="18" fill="#ffffff" opacity="0.9"/>
+<text x="514" y="324.5" font-family="Helvetica" font-size="9" fill="#404040" text-anchor="middle">Creates &amp; injects</text>
+<path d="M 274 294 L 274 520.5 L 214 520.5 L 214 747" fill="none" stroke="#707070" stroke-width="1.4" stroke-dasharray="6 5"/>
+<polygon points="208,741 220,741 214,747" fill="#707070"/>
+<rect x="221.1" y="511.5" width="45.800000000000004" height="18" fill="#ffffff" opacity="0.9"/>
+<text x="244" y="523.5" font-family="Helvetica" font-size="9" fill="#404040" text-anchor="middle">Creates</text>
+<path d="M 484 256.5 L 504 256.5 L 504 256.5 L 524 256.5" fill="none" stroke="#707070" stroke-width="1.4" stroke-dasharray="6 5"/>
+<polygon points="518,250.5 518,262.5 524,256.5" fill="#707070"/>
+<rect x="473" y="247.5" width="62" height="18" fill="#ffffff" opacity="0.9"/>
+<text x="504" y="259.5" font-family="Helvetica" font-size="9" fill="#404040" text-anchor="middle">Configures</text>
+<path d="M 524 256.5 L 514 256.5 L 514 386.5 L 504 386.5" fill="none" stroke="#707070" stroke-width="1.4" stroke-dasharray="6 5"/>
+<polygon points="510,380.5 510,392.5 504,386.5" fill="#707070"/>
+<rect x="485.7" y="312.5" width="56.6" height="18" fill="#ffffff" opacity="0.9"/>
+<text x="514" y="324.5" font-family="Helvetica" font-size="9" fill="#404040" text-anchor="middle">Routes to</text>
+<path d="M 504 386.5 L 524 386.5 L 524 386.5 L 544 386.5" fill="none" stroke="#707070" stroke-width="1.4" stroke-dasharray="6 5"/>
+<polygon points="538,380.5 538,392.5 544,386.5" fill="#707070"/>
+<rect x="479.5" y="377.5" width="89" height="18" fill="#ffffff" opacity="0.9"/>
+<text x="524" y="389.5" font-family="Helvetica" font-size="9" fill="#404040" text-anchor="middle">Watches / calls</text>
+<path d="M 544 386.5 L 524 386.5 L 524 516.5 L 504 516.5" fill="none" stroke="#707070" stroke-width="1.4" stroke-dasharray="6 5"/>
+<polygon points="510,510.5 510,522.5 504,516.5" fill="#707070"/>
+<rect x="501.1" y="442.5" width="45.800000000000004" height="18" fill="#ffffff" opacity="0.9"/>
+<text x="524" y="454.5" font-family="Helvetica" font-size="9" fill="#404040" text-anchor="middle">Invokes</text>
+<path d="M 759 429 L 759 586.5 L 849 586.5 L 849 744" fill="none" stroke="#707070" stroke-width="1.4" stroke-dasharray="6 5"/>
+<polygon points="843,738 855,738 849,744" fill="#707070"/>
+<rect x="748.7" y="577.5" width="110.60000000000001" height="18" fill="#ffffff" opacity="0.9"/>
+<text x="804" y="589.5" font-family="Helvetica" font-size="9" fill="#404040" text-anchor="middle">Persists session in</text>
+<path d="M 504 516.5 L 524 516.5 L 524 516.5 L 544 516.5" fill="none" stroke="#707070" stroke-width="1.4" stroke-dasharray="6 5"/>
+<polygon points="538,510.5 538,522.5 544,516.5" fill="#707070"/>
+<rect x="466" y="507.5" width="116" height="18" fill="#ffffff" opacity="0.9"/>
+<text x="524" y="519.5" font-family="Helvetica" font-size="9" fill="#404040" text-anchor="middle">Depends on contracts</text>
+<path d="M 284 554 L 284 583 L 214 583 L 214 612" fill="none" stroke="#707070" stroke-width="1.4" stroke-dasharray="6 5"/>
+<polygon points="208,606 220,606 214,612" fill="#707070"/>
+<rect x="204.5" y="574" width="89" height="18" fill="#ffffff" opacity="0.9"/>
+<text x="249" y="586" font-family="Helvetica" font-size="9" fill="#404040" text-anchor="middle">Uses repository</text>
+<path d="M 364 652 L 454 652 L 454 516.5 L 544 516.5" fill="none" stroke="#9673a6" stroke-width="1.4" stroke-dasharray="6 5"/>
+<polygon points="538,510.5 538,522.5 544,516.5" fill="#9673a6"/>
+<rect x="423" y="575.25" width="62" height="18" fill="#ffffff" opacity="0.9"/>
+<text x="454" y="587.25" font-family="Helvetica" font-size="9" fill="#6a4a8a" text-anchor="middle">Implements</text>
+<path d="M 364 652 L 379 652 L 379 652 L 394 652" fill="none" stroke="#707070" stroke-width="1.4" stroke-dasharray="6 5"/>
+<polygon points="388,646 388,658 394,652" fill="#707070"/>
+<rect x="345.3" y="643" width="67.4" height="18" fill="#ffffff" opacity="0.9"/>
+<text x="379" y="655" font-family="Helvetica" font-size="9" fill="#404040" text-anchor="middle">Fetches via</text>
+<path d="M 364 652 L 544 652 L 544 652 L 724 652" fill="none" stroke="#707070" stroke-width="1.4" stroke-dasharray="6 5"/>
+<polygon points="718,646 718,658 724,652" fill="#707070"/>
+<rect x="515.7" y="643" width="56.6" height="18" fill="#ffffff" opacity="0.9"/>
+<text x="544" y="655" font-family="Helvetica" font-size="9" fill="#404040" text-anchor="middle">Maps DTOs</text>
+<path d="M 394 652 L 379 652 L 379 787 L 364 787" fill="none" stroke="#707070" stroke-width="1.4" stroke-dasharray="6 5"/>
+<polygon points="370,781 370,793 364,787" fill="#707070"/>
+<rect x="326.4" y="710.5" width="105.2" height="18" fill="#ffffff" opacity="0.9"/>
+<text x="379" y="722.5" font-family="Helvetica" font-size="9" fill="#404040" text-anchor="middle">Sends requests via</text>
+<path d="M 694 652 L 709 652 L 709 652 L 724 652" fill="none" stroke="#707070" stroke-width="1.4" stroke-dasharray="6 5"/>
+<polygon points="718,646 718,658 724,652" fill="#707070"/>
+<rect x="659.1" y="643" width="99.80000000000001" height="18" fill="#ffffff" opacity="0.9"/>
+<text x="709" y="655" font-family="Helvetica" font-size="9" fill="#404040" text-anchor="middle">Deserializes into</text>
+<path d="M 364 787 L 379 787 L 379 787 L 394 787" fill="none" stroke="#707070" stroke-width="1.4" stroke-dasharray="6 5"/>
+<polygon points="388,781 388,793 394,787" fill="#707070"/>
+<rect x="318.3" y="778" width="121.4" height="18" fill="#ffffff" opacity="0.9"/>
+<text x="379" y="790" font-family="Helvetica" font-size="9" fill="#404040" text-anchor="middle">Runs requests through</text>
+<path d="M 694 787 L 716.5 787 L 716.5 788 L 739 788" fill="none" stroke="#707070" stroke-width="1.4" stroke-dasharray="6 5"/>
+<polygon points="733,782 733,794 739,788" fill="#707070"/>
+<rect x="674.7" y="778.5" width="83.60000000000001" height="18" fill="#ffffff" opacity="0.9"/>
+<text x="716.5" y="790.5" font-family="Helvetica" font-size="9" fill="#404040" text-anchor="middle">Reads JWT from</text>
+<path d="M 364 787 L 384 787 L 384 1071.5 L 404 1071.5" fill="none" stroke="#707070" stroke-width="1.4" stroke-dasharray="6 5"/>
+<polygon points="398,1065.5 398,1077.5 404,1071.5" fill="#707070"/>
+<rect x="331.4" y="914.25" width="105.2" height="30" fill="#ffffff" opacity="0.9"/>
+<text x="384" y="926.25" font-family="Helvetica" font-size="9" fill="#404040" text-anchor="middle">Makes API calls to</text>
+<text x="384" y="938.25" font-family="Helvetica" font-size="9" fill="#404040" text-anchor="middle">[JSON/HTTPS]</text>
+<rect x="24" y="164" width="1010" height="820" rx="8" ry="8" fill="none" stroke="#1A365D" stroke-width="1" stroke-dasharray="8 6"/>
+<text x="36" y="980" font-family="Helvetica" font-size="10.5" fill="#1A365D" text-anchor="start" >Mobile App [Container: Flutter]</text>
+<rect x="44" y="189" width="970" height="115" rx="0" ry="0" fill="none" stroke="#b3b3b3" stroke-width="1" stroke-dasharray="8 6"/>
+<text x="56" y="205" font-family="Helvetica" font-size="10.5" fill="#888888" text-anchor="start" >Application / bootstrap</text>
+<rect x="44" y="319" width="970" height="120" rx="0" ry="0" fill="none" stroke="#b3b3b3" stroke-width="1" stroke-dasharray="8 6"/>
+<text x="56" y="335" font-family="Helvetica" font-size="10.5" fill="#888888" text-anchor="start" >Presentation</text>
+<rect x="44" y="454" width="970" height="115" rx="0" ry="0" fill="none" stroke="#b3b3b3" stroke-width="1" stroke-dasharray="8 6"/>
+<text x="56" y="470" font-family="Helvetica" font-size="10.5" fill="#888888" text-anchor="start" >Domain</text>
+<rect x="44" y="584" width="970" height="120" rx="0" ry="0" fill="none" stroke="#b3b3b3" stroke-width="1" stroke-dasharray="8 6"/>
+<text x="56" y="600" font-family="Helvetica" font-size="10.5" fill="#888888" text-anchor="start" >Data</text>
+<rect x="44" y="719" width="970" height="120" rx="0" ry="0" fill="none" stroke="#b3b3b3" stroke-width="1" stroke-dasharray="8 6"/>
+<text x="56" y="735" font-family="Helvetica" font-size="10.5" fill="#888888" text-anchor="start" >Core / infrastructure</text>
+<ellipse cx="525" cy="45" rx="21" ry="21" fill="#08427B" stroke="#073B6F" stroke-width="1.3"/>
+<rect x="425" y="59" width="200" height="85" rx="8" ry="8" fill="#08427B" stroke="#073B6F" stroke-width="1.3"/>
+<text x="525" y="82" font-family="Helvetica" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">Customer</text>
+<text x="525" y="95" font-family="Helvetica" font-size="9" fill="#ffffff" text-anchor="middle"  opacity="0.9">[Person]</text>
+<text x="525" y="121" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >Searches, buys, and manages</text>
+<text x="525" y="134" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >tickets from the app.</text>
+<rect x="64" y="219" width="420" height="75" rx="8" ry="8" fill="#438DD5" stroke="#2E6DA4" stroke-width="1.3"/>
+<text x="274" y="237" font-family="Helvetica" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">App Bootstrap &amp; DI</text>
+<text x="274" y="250" font-family="Helvetica" font-size="9" fill="#ffffff" text-anchor="middle"  opacity="0.9">[Component: main.dart / MultiProvider]</text>
+<text x="274" y="276" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >Loads prefs, builds the ApiClient, injects providers, sets theme</text>
+<text x="274" y="289" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >and routes.</text>
+<rect x="524" y="219" width="450" height="75" rx="8" ry="8" fill="#438DD5" stroke="#2E6DA4" stroke-width="1.3"/>
+<text x="749" y="243.5" font-family="Helvetica" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">Router</text>
+<text x="749" y="256.5" font-family="Helvetica" font-size="9" fill="#ffffff" text-anchor="middle"  opacity="0.9">[Component: onGenerateRoute]</text>
+<text x="749" y="282.5" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >Maps routes to pages; passes arguments (eventId, orderId, ticketId).</text>
+<rect x="64" y="344" width="440" height="85" rx="8" ry="8" fill="#438DD5" stroke="#2E6DA4" stroke-width="1.3"/>
+<text x="284" y="367" font-family="Helvetica" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">UI Pages &amp; Widgets</text>
+<text x="284" y="380" font-family="Helvetica" font-size="9" fill="#ffffff" text-anchor="middle"  opacity="0.9">[Component: Flutter Widgets]</text>
+<text x="284" y="406" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >Search, Event detail, Seat selection, Checkout, My tickets, Profile,</text>
+<text x="284" y="419" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >Notifications, Promotions; MainShell nav.</text>
+<rect x="544" y="344" width="430" height="85" rx="8" ry="8" fill="#438DD5" stroke="#2E6DA4" stroke-width="1.3"/>
+<text x="759" y="367" font-family="Helvetica" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">State Providers</text>
+<text x="759" y="380" font-family="Helvetica" font-size="9" fill="#ffffff" text-anchor="middle"  opacity="0.9">[Component: provider · ChangeNotifier]</text>
+<text x="759" y="406" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >Auth, Event, Order, Ticket, Payment. Hold UI state, call use cases,</text>
+<text x="759" y="419" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >notify widgets.</text>
+<rect x="64" y="479" width="440" height="75" rx="8" ry="8" fill="#438DD5" stroke="#2E6DA4" stroke-width="1.3"/>
+<text x="284" y="497" font-family="Helvetica" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">Use Cases</text>
+<text x="284" y="510" font-family="Helvetica" font-size="9" fill="#ffffff" text-anchor="middle"  opacity="0.9">[Component: Dart]</text>
+<text x="284" y="536" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >Login, SearchEvents, PurchaseTicket, ProcessPayment, GetNotifications,</text>
+<text x="284" y="549" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >GetPromotions.</text>
+<rect x="544" y="479" width="430" height="75" rx="8" ry="8" fill="#438DD5" stroke="#2E6DA4" stroke-width="1.3"/>
+<text x="759" y="497" font-family="Helvetica" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">Entities &amp; Repository Contracts</text>
+<text x="759" y="510" font-family="Helvetica" font-size="9" fill="#ffffff" text-anchor="middle"  opacity="0.9">[Component: Dart]</text>
+<text x="759" y="536" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >User, Event, Ticket, Seat, Payment, Promotion; abstract repository</text>
+<text x="759" y="549" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >interfaces.</text>
+<rect x="64" y="612" width="300" height="80" rx="8" ry="8" fill="#438DD5" stroke="#2E6DA4" stroke-width="1.3"/>
+<text x="214" y="632.5" font-family="Helvetica" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">Repository Implementations</text>
+<text x="214" y="645.5" font-family="Helvetica" font-size="9" fill="#ffffff" text-anchor="middle"  opacity="0.9">[Component: Dart]</text>
+<text x="214" y="671.5" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >Implement contracts; map DTOs to entities; wrap</text>
+<text x="214" y="684.5" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >failures.</text>
+<rect x="394" y="612" width="300" height="80" rx="8" ry="8" fill="#438DD5" stroke="#2E6DA4" stroke-width="1.3"/>
+<text x="544" y="632.5" font-family="Helvetica" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">Remote Data Sources</text>
+<text x="544" y="645.5" font-family="Helvetica" font-size="9" fill="#ffffff" text-anchor="middle"  opacity="0.9">[Component: Dart]</text>
+<text x="544" y="671.5" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >Per-feature; build requests and call the API</text>
+<text x="544" y="684.5" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >Client.</text>
+<rect x="724" y="612" width="250" height="80" rx="8" ry="8" fill="#438DD5" stroke="#2E6DA4" stroke-width="1.3"/>
+<text x="849" y="639" font-family="Helvetica" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">Models / DTOs</text>
+<text x="849" y="652" font-family="Helvetica" font-size="9" fill="#ffffff" text-anchor="middle"  opacity="0.9">[Component: Dart]</text>
+<text x="849" y="678" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >JSON (de)serialization of API payloads.</text>
+<rect x="64" y="747" width="300" height="80" rx="8" ry="8" fill="#438DD5" stroke="#2E6DA4" stroke-width="1.3"/>
+<text x="214" y="767.5" font-family="Helvetica" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">API Client</text>
+<text x="214" y="780.5" font-family="Helvetica" font-size="9" fill="#ffffff" text-anchor="middle"  opacity="0.9">[Component: Dio]</text>
+<text x="214" y="806.5" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >GET/POST/PUT/DELETE; ApiResponse &amp;</text>
+<text x="214" y="819.5" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >PagedResponse; error mapping.</text>
+<rect x="394" y="747" width="300" height="80" rx="8" ry="8" fill="#438DD5" stroke="#2E6DA4" stroke-width="1.3"/>
+<text x="544" y="767.5" font-family="Helvetica" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">Auth Interceptor</text>
+<text x="544" y="780.5" font-family="Helvetica" font-size="9" fill="#ffffff" text-anchor="middle"  opacity="0.9">[Component: Dio Interceptor]</text>
+<text x="544" y="806.5" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >Attaches the Bearer JWT to requests; handles</text>
+<text x="544" y="819.5" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >401.</text>
+<path d="M 739 752 A 110 8 0 0 1 959 752 L 959 824 A 110 8 0 0 1 739 824 Z" fill="#438DD5" stroke="#2E6DA4" stroke-width="1.3"/>
+<path d="M 739 752 A 110 8 0 0 0 959 752" fill="none" stroke="#2E6DA4" stroke-width="1.3"/>
+<text x="849" y="781.5" font-family="Helvetica" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">Local Storage</text>
+<text x="849" y="794.5" font-family="Helvetica" font-size="9" fill="#ffffff" text-anchor="middle"  opacity="0.9">[Component: SharedPreferences]</text>
+<text x="849" y="807.5" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >JWT token &amp; user session</text>
+<rect x="404" y="1024" width="290" height="95" rx="8" ry="8" fill="#1168BD" stroke="#0E5A9E" stroke-width="1.3"/>
+<text x="549" y="1058.5" font-family="Helvetica" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">API Gateway + Waiting Room</text>
+<text x="549" y="1071.5" font-family="Helvetica" font-size="9" fill="#ffffff" text-anchor="middle"  opacity="0.9">[Container: Spring Cloud Gateway]</text>
+<text x="549" y="1097.5" font-family="Helvetica" font-size="10.5" fill="#ffffff" text-anchor="middle" >Entry point to the TicketWave backend.</text>
+<text x="24" y="1169" font-family="Helvetica" font-size="15" fill="#333333" font-weight="bold">Component diagram for TicketWave Events — Mobile App [Flutter]</text>
+<text x="24" y="1188" font-family="Helvetica" font-size="10" fill="#777777" >Clean Architecture (feature-based): Presentation → Domain → Data, over shared Core infrastructure. Provider for state, Dio for HTTP.</text>
+</svg>
